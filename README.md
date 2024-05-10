@@ -10,6 +10,28 @@ locations from people in the field during disasters and emergencies.
 
 The result will be a GeoJSON like the following:
 
+
+```json
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -56.1996432,
+          -34.9075622
+        ]
+      },
+      "type": "Feature",
+      "properties": {
+        "message": "10/31/23, 19:06 - Emi: 👍👍 en camino"
+      }
+    }
+  ]
+}
+```
+
 ```geojson
 {
   "type": "FeatureCollection",
