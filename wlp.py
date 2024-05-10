@@ -20,6 +20,7 @@ def main():
     args.add_argument("--file", "-f", help="File", type=str, default=None)
     args = args.parse_args()
     if args.file:
+        print("coordinates_string; osm_link")
         parseLocations(args.file)
     else:
         print("WhatsApp location parser")

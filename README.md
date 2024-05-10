@@ -6,7 +6,7 @@ and print them as a CSV, with values separated by the ';' character.
 It was developed to help emergency services and humanitarian organizations to get
 locations from people in the field during disasters and emergencies.
 
-`Usage: python wlp.py --file your_whatsapp_exported_chat.txt`
+`Usage: python wlp.py --file your_whatsapp_exported_chat.txt > your_csv_file.csv`
 
 Copyright 2024 Emilio Mariscal
 
