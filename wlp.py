@@ -37,7 +37,7 @@ def main():
         print("{")
         print("\"type\": \"FeatureCollection\",")
         print("\"features\": [")
-        parseLocations(args.file, False)
+        parseLocations(args.file)
         sys.stdout.write("\b")
         sys.stdout.flush()
         print("]")
