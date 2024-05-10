@@ -1,4 +1,4 @@
-# Whastapp Location Parser
+# WhatsApp Location Parser
 
 This very simple script can read locations shared on a WhatsApp chat exported to .txt
 and print them as a CSV, with values separated by the ';' character.
