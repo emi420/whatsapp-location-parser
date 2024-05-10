@@ -1,12 +1,12 @@
 # WhatsApp Location Parser
 
 This very simple script can read locations shared on a WhatsApp chat exported to .txt
-and print them as a CSV, with values separated by the ';' character.
+and print them as a GeoJSON file.
 
 It was developed to help emergency services and humanitarian organizations to get
 locations from people in the field during disasters and emergencies.
 
-`Usage: python wlp.py --file your_whatsapp_exported_chat.txt > your_csv_file.csv`
+`Usage: python wlp.py -f your_whatsapp_exported_chat.txt > locations.geojson`
 
 Copyright 2024 Emilio Mariscal
 
