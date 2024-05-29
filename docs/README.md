@@ -19,16 +19,6 @@ locations from people in the field during disasters and emergencies.
 
 <img width="226" alt="Screenshot 2024-05-29 at 12 48 21" src="https://github.com/emi420/whatsapp-location-parser/assets/1226194/e477b46d-e480-4969-80d2-592d7fbc88c3">
 
-## Install and run
-
-`npm install`
-`npm start`
-
-
-Copyright 2024 Emilio Mariscal
-
-This is free software! you may use this project under the terms of the GNU General Public License (GPL) Version 3.
-
 ## More docs
 
-* Spanish
+* [Spanish](https://github.com/emi420/whatsapp-location-parser/blob/master/docs/README.es.md)
