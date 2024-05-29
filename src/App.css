@@ -1,0 +1,119 @@
+.app {
+  text-align: center;
+}
+
+.logo {
+  height: 5vmin;
+  pointer-events: none;
+}
+
+.header {
+  background-color: #f8f8f8;
+  min-height: 30vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: #222;
+}
+
+.header h1 {
+  font-family: BarlowCondensed;
+  font-style: normal;
+  font-weight: 200;
+  margin-bottom: 0;
+}
+
+.header h1 > strong {
+  font-weight: 400;
+  font-style: bold;
+}
+
+.content {
+  text-align: center;
+  justify-content: center;
+  display: flex;
+  min-height: 30vh;
+  padding: 5vh;
+}
+
+.fileUpload, .map {
+  text-align: center;
+  justify-content: center;
+  display: flex;
+  min-height: 30vh;
+}
+
+.fileUpload {
+  padding: 5vh;
+}
+
+.fileUploadDropArea {
+  border: 2px dashed #5E5E5E !important;
+}
+
+.fileUploadDropArea span {
+  font-size: 1.5em;
+  text-decoration: none !important;
+}
+
+.fileUploadDropArea .file-types {
+  font-size: 1em;
+  opacity: .5;
+}
+
+
+.footer {
+  padding: 5vh;
+}
+
+.footer img {
+  display:inline;
+  vertical-align:middle;
+  margin-left: 10px;
+}
+
+.options {
+  padding: 5vh;
+}
+
+.primaryButton, .secondaryButton {
+  padding: 10px;
+  border-radius: 5px;
+  text-decoration: none;
+  display: inline-block;
+  margin: 3px;
+  font-weight: bold;
+  font-size: 1.2em;
+  box-shadow: none;
+  border: none
+}
+
+.primaryButton {
+  background-color: #D63F40;
+  color: white;
+}
+
+.secondaryButton {
+  background-color: #E0D9D3;
+  color: #5E5E5E;
+}
+
+.data {
+  
+}
+
+@font-face {
+  font-family: BarlowCondensed;
+  font-style: bold;
+  font-weight: 400;
+  src: url("/public/fonts/BarlowCondensed-Bold.ttf");
+}
+
+@font-face {
+  font-family: BarlowCondensed;
+  font-style: normal;
+  font-weight: 200;
+  src: url("/public/fonts/BarlowCondensed-Regular.ttf");
+}

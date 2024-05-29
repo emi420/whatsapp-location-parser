@@ -1,0 +1,13 @@
+
+.map {
+  width: 100vw;
+  height: 50vh;
+}
+
+.activePopupFeatureContent {
+  font-size: 1.3em;
+}
+
+.popup {
+  min-width: 20vw;
+}
