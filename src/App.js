@@ -60,7 +60,7 @@ function App() {
         <h2>No locations found in this file.</h2>
       }
       <footer className="footer">
-        <a href="https://github.com/emi420/whatsapp-location-parser/docs">How to use it?</a>
+        <a href="https://github.com/emi420/whatsapp-location-parser/tree/master/docs">How to use it?</a>
         <br /> <br />
         <span className="copy">
           Free and Open Source Software by
