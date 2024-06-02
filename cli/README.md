@@ -13,8 +13,7 @@ The result will be a GeoJSON like the following:
 
 ```json
 {
-  "type": "FeatureCollection",
-  "features": [
+   
     {
       "geometry": {
         "type": "Point",

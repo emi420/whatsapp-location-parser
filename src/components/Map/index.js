@@ -31,7 +31,7 @@ export default function Map({ data }) {
           data: data,
           type: "geojson"
         });
-
+        
         // Change cursor on marker hover
         map.current.on('mouseenter', 'pois', () => {
           map.current.getCanvas().style.cursor = 'pointer';

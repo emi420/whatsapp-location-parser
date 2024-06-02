@@ -1,10 +1,39 @@
+body {
+  overflow: hidden;
+}
+
 .app {
   text-align: center;
 }
 
-.logo {
-  height: 5vmin;
+.copy .logo {
+  display:inline;
+  vertical-align:middle;
+  margin-left: 10px;
+  height: 3vmin;
   pointer-events: none;
+}
+
+.copy {
+  font-size: .9rem;
+  padding: 1vh;
+  color: #858585;
+  opacity: .8;
+}
+
+.appNav {
+  padding: 1vh;
+  position: absolute;
+  top: 0;
+  right: 0;
+}
+
+.appNav button {
+  border-left: 1px solid #f1f1f1;
+}
+
+.appNav button:first-child {
+  border-left: none;
 }
 
 .header {
@@ -63,19 +92,9 @@
   opacity: .5;
 }
 
-
-.footer {
+.fileOtions {
   padding: 5vh;
-}
-
-.footer img {
-  display:inline;
-  vertical-align:middle;
-  margin-left: 10px;
-}
-
-.options {
-  padding: 5vh;
+  font-size: 1rem;
 }
 
 .primaryButton, .secondaryButton {
@@ -90,6 +109,23 @@
   border: none
 }
 
+.textButton {
+  padding: 5px 10px;
+  text-decoration: none;
+  display: inline-block;
+  font-weight: normal;
+  font-size: .9rem;
+  box-shadow: none;
+  border: none;
+  background: transparent;
+  color: #858585;
+  cursor: pointer;
+}
+
+.textButton:hover {
+  text-decoration: underline;
+}
+
 .primaryButton {
   background-color: #D63F40;
   color: white;
@@ -100,8 +136,41 @@
   color: #5E5E5E;
 }
 
-.data {
-  
+.optionButton {
+  padding: 10px;
+  text-decoration: none;
+  display: inline-block;
+  font-size: .8em;
+  box-shadow: none;
+  border: none;
+  color: white;
+  background-color: #E0D9D3;
+}
+
+.optionButtonLeft {
+  border-radius: 5px 0 0 5px;
+}
+
+.optionButtonRight {
+  border-radius: 0 5px 5px 0;
+}
+
+.optionButtonActive {
+  background-color: #0A6DCE;
+  opacity: .8;
+}
+
+.cardOptions {
+  display: flex;
+  width: 60vw;
+}
+
+.cardOption {
+  width: 30%;
+}
+
+.cardOptionImage {
+  width: 80%;
 }
 
 @font-face {
@@ -117,3 +186,4 @@
   font-weight: 200;
   src: url("/public/fonts/BarlowCondensed-Regular.ttf");
 }
+
