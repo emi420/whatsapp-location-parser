@@ -1,18 +1,43 @@
 import React from "react";
 import CardOption from "./CardOption";
 
-function Settings({ onChange }) {
+function Settings({ settings, onChange }) {
+
+  const handleOptionClick = (name) => {
+    onChange({
+      ...settings,
+      msgPosition: name
+    })
+  }
 
   return (
     <div className="">
-      <div class="cardOptions">
-        <CardOption img={process.env.PUBLIC_URL + "/img/config-mixed.png"} name="mixed" title="Mixed">
+      <div className="cardOptions">
+        <CardOption 
+          selected={settings.msgPosition === "closest"} 
+          img={process.env.PUBLIC_URL + "/img/config-closest.png"} 
+          name="closest"
+          title="Closest"
+          onClick={handleOptionClick}
+        >
           It will look for the closest message from the same user.
         </CardOption>
-        <CardOption img={process.env.PUBLIC_URL + "/img/config-after.png"} name="after" title="After">
+        <CardOption
+          selected={settings.msgPosition === "after"}
+          img={process.env.PUBLIC_URL + "/img/config-after.png"}
+          name="after"
+          title="After"
+          onClick={handleOptionClick}
+        >
           It will look for the closest message from the same user <strong>after</strong> the location.
         </CardOption>
-        <CardOption img={process.env.PUBLIC_URL + "/img/config-before.png"} name="before" title="Before">
+        <CardOption
+          selected={settings.msgPosition === "before"}
+          img={process.env.PUBLIC_URL + "/img/config-before.png"}
+          name="before"
+          title="Before"
+          onClick={handleOptionClick}
+        >
           It will look for the closest message from the same user <strong>before</strong> the location.
         </CardOption>
       </div>

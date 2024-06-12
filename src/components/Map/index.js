@@ -10,6 +10,18 @@ export default function Map({ data }) {
     const map = useRef(null);
     const [activePopupFeature, setActivePopupFeature] = useState(null);
     const popupRef = useRef(null);
+
+    const formatDate = (datetime) => {
+      if (datetime) {
+        const d = new Date(datetime);
+        return (d.getDate() + "/" + 
+          d.getMonth() + "/" + 
+          d.getFullYear() + " " + 
+          String(d.getHours()).padStart(2, '0') + ":" + 
+          String(d.getMinutes()).padStart(2, '0'))
+      }
+      return "unknown";
+    };
       
     useEffect(() => {
       if (map.current) return;
@@ -70,7 +82,7 @@ export default function Map({ data }) {
     return (
       <div className="map-wrap">
         <div ref={mapContainer} className="map" />
-        {map.current && 
+        {map.current && activePopupFeature &&
           <Popup
             longitude={activePopupFeature.geometry.coordinates[0]}
             latitude={activePopupFeature.geometry.coordinates[1]}
@@ -79,7 +91,14 @@ export default function Map({ data }) {
             closeButton={true}
           >
            <p className="activePopupFeatureContent">
-              {activePopupFeature.properties.message}
+              <p>
+                <span className="msgUsername">{activePopupFeature.properties.username}</span>
+                <span className="msgDatetime">{formatDate(activePopupFeature.properties.datetime)}</span>
+              </p>
+              <p>
+                <span className="location"><code>{activePopupFeature.properties.location}</code></span>
+              </p>
+              <p className="message">{activePopupFeature.properties.message}</p>
             </p>
           </Popup>
         }
