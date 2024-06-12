@@ -89,7 +89,7 @@ function App() {
           <div className="fileUpload">
             <FileUpload onFileLoad={(fileContent) => handleFile(fileContent)}/>
           </div>
-          <p>Will search for locations and the <strong>{getPositionLabel(settings.msgPosition)}</strong> message from the same user.</p>
+          <p>It will search for locations and the <strong>{getPositionLabel(settings.msgPosition)}</strong> message from the same user.</p>
         </>
       }
       { data && data.features.length > 0 && 
