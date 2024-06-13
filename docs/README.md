@@ -12,8 +12,8 @@ locations from people in the field during disasters and emergencies.
 
 ## How to use it?
 
-1. Export a WhatsApp chat with shared locations (it gives you a .zip with a .txt inside it)
-2. Upload the .txt to this page
+1. Export a WhatsApp chat with shared locations
+2. Upload the .zip file to this page
 3. It will extract all the locations and display them on a map, together with the message that follows each location.
 4. You can also download the locations + messages as a GeoJSON file from there
 
