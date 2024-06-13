@@ -1,12 +1,35 @@
 import React, { useState, useEffect } from "react";
 import { FileUploader } from "react-drag-drop-files";
+import JSZip from "jszip";
 
-const fileTypes = ["txt"];
+const fileTypes = ["txt", "zip"];
 
-function FileUpload({ onFileLoad, onError}) {
+function FileUpload({ onFileLoad, onDataFileLoad, onError}) {
   const [file, setFile] = useState(null);
+
   const handleChange = (file) => {
-    setFile(file);
+    // Read a .txt export
+    if (file.name.endsWith(".txt")) {
+      setFile(file);
+    } else {
+      // File is a Zip
+      new JSZip().loadAsync( file )
+      .then(function(zip) {
+        Object.keys(zip.files).forEach(filename => {
+          if (filename.endsWith(".txt")) {
+            zip.files[filename].async("string").then(function (data) {
+              onFileLoad(data);
+            });
+          } else if (filename.endsWith(".jpg")) {
+            zip.files[filename].async("arraybuffer").then(function (data) {
+              const buffer = new Uint8Array(data);
+              const blob = new Blob([buffer.buffer]);
+              onDataFileLoad(filename, blob);
+            });
+          }
+        })
+      });
+    }
   };
 
   useEffect(() => {
@@ -20,7 +43,7 @@ function FileUpload({ onFileLoad, onError}) {
         onError();
       }
     }
-  }, [file]);
+  }, [file, onError, onFileLoad]);
 
   return (
     <FileUploader classes={"fileUploadDropArea"} handleChange={handleChange} name="file" types={fileTypes} />

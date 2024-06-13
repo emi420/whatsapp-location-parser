@@ -5,7 +5,7 @@ import { osm } from './source';
 import Popup from './popup';
 import './map.css';
 
-export default function Map({ data }) {
+export default function Map({ data, dataFiles }) {
     const mapContainer = useRef(null);
     const map = useRef(null);
     const [activePopupFeature, setActivePopupFeature] = useState(null);
@@ -90,16 +90,18 @@ export default function Map({ data }) {
             closeOnMove={false}
             closeButton={true}
           >
-           <p className="activePopupFeatureContent">
+           <div className="activePopupFeatureContent">
               <p>
                 <span className="msgUsername">{activePopupFeature.properties.username}</span>
                 <span className="msgDatetime">{formatDate(activePopupFeature.properties.datetime)}</span>
               </p>
               <p>
-                <span className="location"><code>{activePopupFeature.properties.location}</code></span>
+              { (activePopupFeature.properties.file && activePopupFeature.properties.file in dataFiles) ?
+                <img className="popupImage" alt="Message attached file" src={URL.createObjectURL(dataFiles[activePopupFeature.properties.file])} />
+                : activePopupFeature.properties.message
+              }
               </p>
-              <p className="message">{activePopupFeature.properties.message}</p>
-            </p>
+            </div>
           </Popup>
         }
       </div>

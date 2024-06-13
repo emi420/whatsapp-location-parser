@@ -8,11 +8,16 @@ const MSG_PATTERN = /(.*) - (.*?): (.*)/;
 const parseMessage = (line) => {
     const match = line.match(MSG_PATTERN);
     if (match) {
-        return {
+        let msgObject = {
             datetime: new Date(match[1]),
             username:  match[2],
             message: match[3],
         }
+        const jpgIndex = msgObject.message.indexOf(".jpg");
+        if (jpgIndex > 0) {
+            msgObject.file = msgObject.message.substring(0,jpgIndex + 4);
+        }
+        return msgObject;
     }
 }
 
@@ -187,7 +192,6 @@ function useWhatsappParser({ text, msgPosition}) {
         if (last_line_is_location) {
             geoJSON.features.push(featureObject);
         }
-
         setGeoJSON(geoJSON);
     }, [text, msgPosition]);
 

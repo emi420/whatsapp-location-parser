@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import logo from './hot-logo.svg';
 import './App.css';
 import FileUpload from './components/FileUpload'
@@ -20,6 +20,7 @@ function App() {
     msgPosition: "closest"
   });
   const [geoJson] = useWhatsappParser({ text: content, msgPosition: settings.msgPosition});
+  const dataFiles = useRef({});
 
   const getPositionLabel = (position) => {
     if (position === "after") {
@@ -32,6 +33,10 @@ function App() {
   
   const handleFile = (fileContent) => {
     setContent(fileContent)
+  }
+
+  const handleDataFile = (filename, fileContent) => {
+    dataFiles.current[filename] = fileContent;
   }
 
   useEffect(() => {
@@ -66,11 +71,12 @@ function App() {
           }} />
           <NavModal isOpen={modalContent !== null} onClose={handleModalClose} content={modalContent} />
         </div>
-        <h1>WhatsApp <strong>Location Parser</strong></h1>
+        <h1 className={data && data.features.length > 0 ? "titleSmall" : ""} >WhatsApp <strong>Location Parser</strong></h1>
         { data && data.features.length > 0 ?
         <div className="fileOtions">
             <DownloadButton data={data} filename="whatsapp-locations" />
             <button onClick={handleNewUploadClick} className="secondaryButton">Upload new file</button>
+            {/* <p>{JSON.stringify(Object.keys(dataFiles))}</p> */}
         </div>
         :
         <>
@@ -87,15 +93,16 @@ function App() {
       { !content &&
         <>
           <div className="fileUpload">
-            <FileUpload onFileLoad={(fileContent) => handleFile(fileContent)}/>
+            <FileUpload onDataFileLoad={handleDataFile} onFileLoad={handleFile} />
           </div>
           <p>It will search for locations and the <strong>{getPositionLabel(settings.msgPosition)}</strong> message from the same user.</p>
+          <a className="githubLink" href="https://github.com/emi420/whatsapp-location-parser">https://github.com/emi420/whatsapp-location-parser</a>
         </>
       }
       { data && data.features.length > 0 && 
         <div className="data">
           <div className="map">
-            <Map data={data} />
+            <Map data={data} dataFiles={dataFiles.current}/>
           </div>
         </div>
       }

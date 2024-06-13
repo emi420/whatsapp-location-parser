@@ -38,7 +38,7 @@ body {
 
 .header {
   background-color: #f8f8f8;
-  min-height: 30vh;
+  min-height: 15vh;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -59,6 +59,11 @@ body {
   font-style: bold;
 }
 
+
+.header h1.titleSmall {
+  font-size: 2rem;
+}
+
 .content {
   text-align: center;
   justify-content: center;
@@ -71,7 +76,7 @@ body {
   text-align: center;
   justify-content: center;
   display: flex;
-  min-height: 30vh;
+  min-height: 35vh;
 }
 
 .fileUpload {
@@ -93,7 +98,7 @@ body {
 }
 
 .fileOtions {
-  padding: 5vh;
+  padding: 3vh;
   font-size: 1rem;
 }
 
@@ -104,7 +109,7 @@ body {
   display: inline-block;
   margin: 3px;
   font-weight: bold;
-  font-size: 1.2em;
+  font-size: 1em;
   box-shadow: none;
   border: none
 }
@@ -188,6 +193,17 @@ body {
   padding-left: 10px;
 }
 
+.githubLink {
+  color: #999;
+  display: block;
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  padding: 2vh;
+  text-decoration: none;
+  font-size: .8rem;
+}
+
 @font-face {
   font-family: BarlowCondensed;
   font-style: bold;
@@ -202,3 +218,20 @@ body {
   src: url("/public/fonts/BarlowCondensed-Regular.ttf");
 }
 
+
+.map {
+  width: 100vw;
+  height: 80vh;
+}
+
+.activePopupFeatureContent {
+  font-size: 1.3em;
+}
+
+.popup {
+  min-width: 20vw;
+}
+
+.popupImage {
+  width: 92%;
+}

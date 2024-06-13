@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import maplibregl from "maplibre-gl";
 import { renderToString } from "react-dom/server";
 
