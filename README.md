@@ -1,7 +1,8 @@
 # WhatsApp Location Parser
 
-This very simple web app can read locations shared on a WhatsApp chat exported to .txt
-and parse them as GeoJSON for displaying them on a map and also download as a file.
+This very simple web app can read locations shared on a WhatsApp chat 
+exported to .txt or .zip and parse them as GeoJSON for displaying them
+on a map and also download as a file.
 
 It was developed to help emergency services and humanitarian organizations to get
 locations from people in the field during disasters and emergencies.
