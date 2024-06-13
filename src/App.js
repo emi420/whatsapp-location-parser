@@ -76,7 +76,6 @@ function App() {
         <div className="fileOtions">
             <DownloadButton data={data} filename="whatsapp-locations" />
             <button onClick={handleNewUploadClick} className="secondaryButton">Upload new file</button>
-            {/* <p>{JSON.stringify(Object.keys(dataFiles))}</p> */}
         </div>
         :
         <>
