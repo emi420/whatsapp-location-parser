@@ -9,18 +9,18 @@ function FileUpload({ onFileLoad, onDataFileLoad, onError}) {
 
   const handleChange = (file) => {
     // Read a .txt export
-    if (file.name.endsWith(".txt")) {
+    if (file.name.toLowerCase().endsWith(".txt")) {
       setFile(file);
     } else {
       // File is a Zip
       new JSZip().loadAsync( file )
       .then(function(zip) {
         Object.keys(zip.files).forEach(filename => {
-          if (filename.endsWith(".txt")) {
+          if (filename.toLowerCase().endsWith(".txt")) {
             zip.files[filename].async("string").then(function (data) {
               onFileLoad(data);
             });
-          } else if (filename.endsWith(".jpg")) {
+          } else if (filename.toLowerCase().endsWith(".jpg")) {
             zip.files[filename].async("arraybuffer").then(function (data) {
               const buffer = new Uint8Array(data);
               const blob = new Blob([buffer.buffer]);

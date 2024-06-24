@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 
-const LOCATION_PREFIX = "https://maps.google.com/?q=";
+export const LOCATION_PREFIX = "https://maps.google.com/?q=";
 const LOCATION_PREFIX_LEN = LOCATION_PREFIX.length;
 const MSG_PATTERN = /(.*) - (.*?): (.*)/;
 
@@ -13,7 +13,7 @@ const parseMessage = (line) => {
             username:  match[2],
             message: match[3],
         }
-        const jpgIndex = msgObject.message.indexOf(".jpg");
+        const jpgIndex = msgObject.message.toLowerCase().indexOf(".jpg");
         if (jpgIndex > 0) {
             msgObject.file = msgObject.message.substring(0,jpgIndex + 4);
         }
