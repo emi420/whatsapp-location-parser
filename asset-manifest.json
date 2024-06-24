@@ -1,16 +1,16 @@
 {
   "files": {
     "main.css": "/whatsapp-location-parser/static/css/main.9ae75b7d.css",
-    "main.js": "/whatsapp-location-parser/static/js/main.0c7336f4.js",
+    "main.js": "/whatsapp-location-parser/static/js/main.feb07713.js",
     "static/media/BarlowCondensed-Bold.ttf": "/whatsapp-location-parser/static/media/BarlowCondensed-Bold.ca168dbe270fba68a7f3.ttf",
     "static/media/BarlowCondensed-Regular.ttf": "/whatsapp-location-parser/static/media/BarlowCondensed-Regular.a51441e972d57b28e7c1.ttf",
     "static/media/hot-logo.svg": "/whatsapp-location-parser/static/media/hot-logo.66fc34069886ded1c1c6d3dfa753a628.svg",
     "index.html": "/whatsapp-location-parser/index.html",
     "main.9ae75b7d.css.map": "/whatsapp-location-parser/static/css/main.9ae75b7d.css.map",
-    "main.0c7336f4.js.map": "/whatsapp-location-parser/static/js/main.0c7336f4.js.map"
+    "main.feb07713.js.map": "/whatsapp-location-parser/static/js/main.feb07713.js.map"
   },
   "entrypoints": [
     "static/css/main.9ae75b7d.css",
-    "static/js/main.0c7336f4.js"
+    "static/js/main.feb07713.js"
   ]
 }
