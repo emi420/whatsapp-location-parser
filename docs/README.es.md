@@ -6,7 +6,7 @@ y extraerlas para crear un GeoJSON que las muestre en un mapa con la opción de 
 Fue desarrollado para ayudar a los servicios de emergencia y organizaciones humanitarias para obtener
 localizaciones de personas en campo durante desastres y emergencias.
 
-(Pruéalo aquí!)[https://emi420.github.io/whatsapp-location-parser/]
+[Pruéalo aquí!](https://emi420.github.io/whatsapp-location-parser/)
 
 <img width="476" alt="Screenshot 2024-05-29 at 12 39 09" src="https://github.com/emi420/whatsapp-location-parser/assets/1226194/9fa6c396-8c3b-4293-9e65-0fe0b7faa4d1">
 
