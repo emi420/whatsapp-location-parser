@@ -9,7 +9,7 @@ import NavModal from './components/NavModal';
 import Settings from "./components/Settings";
 import Help from "./components/Help";
 import useSettings from './hooks/useSettings';
-import useWhatsappParser, { LOCATION_PREFIX } from './hooks/useWhatsappParser';
+import useWhatsappParser from './hooks/useWhatsappParser';
 
 function App() {
 
@@ -32,9 +32,7 @@ function App() {
   }
   
   const handleFile = (fileContent) => {
-    if (fileContent.indexOf(LOCATION_PREFIX) > -1) {
-      setContent(fileContent)
-    }
+    setContent(fileContent)
   }
 
   const handleDataFile = (filename, fileContent) => {

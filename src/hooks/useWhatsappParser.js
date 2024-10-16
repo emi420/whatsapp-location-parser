@@ -1,24 +1,53 @@
 import { useState, useEffect } from 'react';
 
-export const LOCATION_PREFIX = "https://maps.google.com/?q=";
-const LOCATION_PREFIX_LEN = LOCATION_PREFIX.length;
-const MSG_PATTERN = /(.*) - (.*?): (.*)/;
+// Regex to search for coordinates in the format <lat>,<lon> (ex: -31.006037,-64.262794)
+const LOCATION_PATTERN = /[-+]?([1-8]?\d(\.\d+)?|90(\.0+)?),\s*[-+]?(180(\.0+)?|((1[0-7]\d)|([1-9]?\d))(\.\d+)?)$/;
+// Regex to search for messages in the format [<date>, <time>] <username>: <message>
+const MSG_PATTERN = /\[(.*)\] (.*): (.*)/;
+
+// Search for a location
+const searchLocation = (line) => {
+    const match = line.match(LOCATION_PATTERN);
+    if (match) {
+        return match[0].split(",").map(x => parseFloat(x))
+    }
+    return null;
+}
 
 // Parse datetime, username and message
 const parseMessage = (line) => {
     const match = line.match(MSG_PATTERN);
     if (match) {
+        let username = match[2];
+
+        // Check if the username has a ':' character and remove the text after it
+        const usernameIndexOf = username.indexOf(":");
+        if (usernameIndexOf > -1) {
+            username = username.substring(0, usernameIndexOf);
+        }
+
         let msgObject = {
-            datetime: new Date(match[1]),
-            username:  match[2],
+            datetime: parseDateString(match[1]),
+            username:  username,
             message: match[3],
         }
+
+        // Look for JPG images
         const jpgIndex = msgObject.message.toLowerCase().indexOf(".jpg");
         if (jpgIndex > 0) {
             msgObject.file = msgObject.message.substring(0,jpgIndex + 4);
         }
+
         return msgObject;
     }
+}
+
+// Parse date strings in the format <DD/MM/YYYY>, <H:MM:SS>
+const parseDateString = (dateStr) => {
+    const dateTime = dateStr.split(",");
+    const date = dateTime[0].split("/");
+    const fmtDate = [[date[2], date[1], date[0]].join("/"), dateTime[1]].join(" ")
+    return new Date(fmtDate);
 }
 
 // Get closest message from the same user
@@ -146,10 +175,8 @@ function useWhatsappParser({ text, msgPosition}) {
 
         Object.values(messages).forEach((msgObject, index) => {
             if (msgObject.message) {
-                const location_index = msgObject.message.indexOf(LOCATION_PREFIX);
-                if (location_index > -1) {
-                    const coordinates_string = msgObject.message.slice(location_index + LOCATION_PREFIX_LEN)
-                    const coordinates_array_str = coordinates_string.split(",");
+                const location = searchLocation(msgObject.message);
+                if (location) {
                     if (!last_line_is_location) {
                         featureObject = {
                             type: "Feature",
@@ -157,8 +184,8 @@ function useWhatsappParser({ text, msgPosition}) {
                             geometry: {
                                 type: "Point",
                                 coordinates: [
-                                    parseFloat(coordinates_array_str[1]),
-                                    parseFloat(coordinates_array_str[0])
+                                    parseFloat(location[1]),
+                                    parseFloat(location[0])
                                 ]
                             }
                         }
