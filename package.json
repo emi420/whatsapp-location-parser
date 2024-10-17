@@ -2,7 +2,7 @@
   "name": "whatsapp-location-parser",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://emi420.github.io/whatsapp-location-parser",
+  "homepage": "https://hotosm.github.io/whatsapp-location-parser",
   "dependencies": {
     "@testing-library/jest-dom": "^5.17.0",
     "@testing-library/react": "^13.4.0",

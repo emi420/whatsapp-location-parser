@@ -6,7 +6,7 @@ and parse them as GeoJSON for displaying them on a map and also download as a fi
 It was developed to help emergency services and humanitarian organizations to get
 locations from people in the field during disasters and emergencies.
 
-[Try it here!](https://emi420.github.io/whatsapp-location-parser/)
+[Try it here!](https://hotosm.github.io/whatsapp-location-parser/)
 
 <img width="476" alt="Screenshot 2024-05-29 at 12 39 09" src="https://github.com/emi420/whatsapp-location-parser/assets/1226194/4e97494a-29e9-4618-be5b-94d6ffb94b04">
 
@@ -21,4 +21,4 @@ locations from people in the field during disasters and emergencies.
 
 ## More docs
 
-* [Spanish](https://github.com/emi420/whatsapp-location-parser/blob/master/docs/README.es.md)
+* [Spanish](https://github.com/hotosm/whatsapp-location-parser/blob/master/docs/README.es.md)

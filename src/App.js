@@ -95,7 +95,7 @@ function App() {
             <FileUpload onDataFileLoad={handleDataFile} onFileLoad={handleFile} />
           </div>
           <p>It will search for locations and the <strong>{getPositionLabel(settings.msgPosition)}</strong> message from the same user.</p>
-          <a className="githubLink" href="https://github.com/emi420/whatsapp-location-parser">https://github.com/emi420/whatsapp-location-parser</a>
+          <a className="githubLink" href="https://github.com/hotosm/whatsapp-location-parser">https://github.com/hotosm/whatsapp-location-parser</a>
         </>
       }
       { data && data.features.length > 0 && 

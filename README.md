@@ -7,13 +7,13 @@ on a map and also download as a file.
 It was developed to help emergency services and humanitarian organizations to get
 locations from people in the field during disasters and emergencies.
 
-[Try it here!](https://emi420.github.io/whatsapp-location-parser/)
+[Try it here!](https://hotosm.github.io/whatsapp-location-parser/)
 
 <img width="925" alt="Screenshot 2024-06-13 at 17 29 29" src="https://github.com/emi420/whatsapp-location-parser/assets/1226194/6e89875b-a8c1-43ee-ad34-5e5d4ecfe6bd">
 
 ## How to use it?
 
-Check [docs](https://github.com/emi420/whatsapp-location-parser/tree/master/docs)
+Check [docs](https://github.com/hotosm/whatsapp-location-parser/tree/master/docs)
 
 ## Install and run
 
