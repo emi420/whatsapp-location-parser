@@ -93,16 +93,22 @@ const getClosestMessage = (messages, msgIndex) => {
             message: messages[prevMessage.index].message + ". " + messages[nextMessage.index].message
         }
       } else if (prevMessage.delta < nextMessage.delta) {
+        // console.log("prev message 1");
         return messages[prevMessage.index];
       } else if (prevMessage.delta > nextMessage.delta) {
+        console.log(messages[nextMessage.index]);
+        console.log("nextMessage 1");
         return messages[nextMessage.index];
       }
 
     } else if (prevMessage) {
+        // console.log("prev message 2");
       return messages[prevMessage.index];
     } else if (nextMessage) {
+        // console.log("nextMessage 2");
       return messages[nextMessage.index];
     }
+    console.log("No closest message found")
     return message;
 }
 
@@ -172,8 +178,9 @@ function useWhatsappParser({ text, msgPosition}) {
     
         // Creates an indexed dictionary for messages
         const messages = parseAndIndex(lines);
+        const msgObjects = Object.values(messages);
 
-        Object.values(messages).forEach((msgObject, index) => {
+        msgObjects.forEach((msgObject, index) => {
             if (msgObject.message) {
                 const location = searchLocation(msgObject.message);
                 if (location) {
@@ -191,21 +198,25 @@ function useWhatsappParser({ text, msgPosition}) {
                         }
                         last_line_is_location = true;
                     }
-                } else if (last_line_is_location) {
+                }
+                
+                const isLastMessage = (location && index === msgObjects.length - 1);
+                if ((!location && last_line_is_location) || isLastMessage) {
+                    const searchIndex = isLastMessage ? index : index - 1
                     switch (msgPosition) {
                         case "before":
                             featureObject.properties = {
-                                ...getClosestPrevMessage(messages, index - 1)
+                                ...getClosestPrevMessage(messages, searchIndex)
                             };
                             break;
                         case "after":
                             featureObject.properties = {
-                                ...getClosestNextMessage(messages, index - 1)
+                                ...getClosestNextMessage(messages, searchIndex)
                             };
                             break;
                         default:
                             featureObject.properties = {
-                                ...getClosestMessage(messages, index - 1)
+                                ...getClosestMessage(messages, searchIndex)
                             };
                             break;
                         }

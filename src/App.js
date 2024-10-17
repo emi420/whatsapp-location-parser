@@ -106,7 +106,10 @@ function App() {
         </div>
       }
       { data && data.features.length === 0 && 
-        <h2>No locations found in this file.</h2>
+        <>
+          <h2>No locations found in this file.</h2>
+          <button onClick={handleNewUploadClick} className="secondaryButton">Upload new file</button>
+        </>
       }
     </div>
   );
