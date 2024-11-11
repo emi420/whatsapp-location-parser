@@ -4,8 +4,22 @@ import { useState, useEffect } from 'react';
 const LOCATION_PATTERN = /[-+]?([1-8]?\d(\.\d+)?|90(\.0+)?),\s*[-+]?(180(\.0+)?|((1[0-7]\d)|([1-9]?\d))(\.\d+)?)$/;
 
 // Regex to search for messages in the format [<date>, <time>] <username>: <message>
-// const MSG_PATTERN_IOS = /\[(.*)\] (.*): (.*)/;
-const MSG_PATTERN = /(.*) - (.*): (.*)/;
+const MSG_PATTERN = {
+    IOS: /\[(.*)\] (.*): (.*)/,
+    ANDROID: /(.*) - (.*): (.*)/
+}
+
+// Detect system (Android or iOS)
+const detectSystem = (line) => {
+    const match_ios = line.match(MSG_PATTERN.IOS);
+    const match_android = line.match(MSG_PATTERN.ANDROID);
+    if (match_ios) {
+        return "IOS";
+    } else if (match_android) {
+        return "ANDROID"
+    }
+    return "UNKNOWN";
+}
 
 // Search for a location
 const searchLocation = (line) => {
@@ -17,8 +31,8 @@ const searchLocation = (line) => {
 }
 
 // Parse datetime, username and message
-const parseMessage = (line) => {
-    const match = line.match(MSG_PATTERN);
+const parseMessage = (line, system) => {
+    const match = line.match(MSG_PATTERN[system]);
     if (match) {
         let username = match[2];
 
@@ -29,7 +43,7 @@ const parseMessage = (line) => {
         }
 
         let msgObject = {
-            datetime: parseDateString(match[1]),
+            datetime: system === "ANDROID" ? parseDateStringAndroid(match[1]) : parseDateStringiOS(match[1]),
             username:  username,
             message: match[3],
         }
@@ -45,15 +59,15 @@ const parseMessage = (line) => {
 }
 
 // Parse date strings in the format [DD/MM/YYYY, hh:mm:ss AM/PM]
-// const parseDateStringiOS = (dateStr) => {
-//     const dateTime = dateStr.split(",");
-//     const date = dateTime[0].split("/");
-//     const fmtDate = [[date[2], date[1], date[0]].join("/"), dateTime[1]].join(" ")
-//     return new Date(fmtDate);
-// }
+const parseDateStringiOS = (dateStr) => {
+    const dateTime = dateStr.split(",");
+    const date = dateTime[0].split("/");
+    const fmtDate = [[date[2], date[1], date[0]].join("/"), dateTime[1]].join(" ")
+    return new Date(fmtDate);
+}
 
 // Parse date strings in the format DD/MM/YY hh:mm a. m./p. m.
-const parseDateString = (dateStr) => {
+const parseDateStringAndroid = (dateStr) => {
     const dateTime = dateStr.replace("a. m.", "AM").replace("p. m.","PM").split(" ");
     const date = dateTime[0].split("/");
     const fmtDate = [[date[1], date[0], date[2]].join("/"), dateTime[1]].join(" ")
@@ -153,11 +167,11 @@ const getClosestMessageByDirection = (messages, msgIndex, direction) => {
 }
 
 // Parse messages from lines and create an index
-const parseAndIndex = (lines) => {
+const parseAndIndex = (lines, system) => {
     let index = 0;
     const result = {};
     lines.forEach((line) => {
-        const msg = parseMessage(line, index);
+        const msg = parseMessage(line, system);
         if (msg) {
             result[index] = msg;
             index++;
@@ -180,9 +194,16 @@ function useWhatsappParser({ text, msgPosition}) {
         };
         let featureObject = {}
         let last_line_is_location = false;
-    
+
         // Creates an indexed dictionary for messages
-        const messages = parseAndIndex(lines);
+        let system;
+        for (let i = 0; i < lines.length; i++) {
+            system = detectSystem(lines[i]);
+            if (system !== "UNKNOWN") {
+                break;
+            }
+        };
+        const messages = parseAndIndex(lines, system);
         const msgObjects = Object.values(messages);
 
         msgObjects.forEach((msgObject, index) => {
@@ -204,7 +225,7 @@ function useWhatsappParser({ text, msgPosition}) {
                         last_line_is_location = true;
                     }
                 }
-                
+
                 const isLastMessage = (location && index === msgObjects.length - 1);
                 if ((!location && last_line_is_location) || isLastMessage) {
                     const searchIndex = isLastMessage ? index : index - 1
