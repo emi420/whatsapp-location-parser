@@ -2,8 +2,10 @@ import { useState, useEffect } from 'react';
 
 // Regex to search for coordinates in the format <lat>,<lon> (ex: -31.006037,-64.262794)
 const LOCATION_PATTERN = /[-+]?([1-8]?\d(\.\d+)?|90(\.0+)?),\s*[-+]?(180(\.0+)?|((1[0-7]\d)|([1-9]?\d))(\.\d+)?)$/;
+
 // Regex to search for messages in the format [<date>, <time>] <username>: <message>
-const MSG_PATTERN = /\[(.*)\] (.*): (.*)/;
+// const MSG_PATTERN_IOS = /\[(.*)\] (.*): (.*)/;
+const MSG_PATTERN = /(.*) - (.*): (.*)/;
 
 // Search for a location
 const searchLocation = (line) => {
@@ -42,13 +44,22 @@ const parseMessage = (line) => {
     }
 }
 
-// Parse date strings in the format <DD/MM/YYYY>, <H:MM:SS>
+// Parse date strings in the format [DD/MM/YYYY, hh:mm:ss AM/PM]
+// const parseDateStringiOS = (dateStr) => {
+//     const dateTime = dateStr.split(",");
+//     const date = dateTime[0].split("/");
+//     const fmtDate = [[date[2], date[1], date[0]].join("/"), dateTime[1]].join(" ")
+//     return new Date(fmtDate);
+// }
+
+// Parse date strings in the format DD/MM/YY hh:mm a. m./p. m.
 const parseDateString = (dateStr) => {
-    const dateTime = dateStr.split(",");
+    const dateTime = dateStr.replace("a. m.", "AM").replace("p. m.","PM").split(" ");
     const date = dateTime[0].split("/");
-    const fmtDate = [[date[2], date[1], date[0]].join("/"), dateTime[1]].join(" ")
+    const fmtDate = [[date[1], date[0], date[2]].join("/"), dateTime[1]].join(" ")
     return new Date(fmtDate);
 }
+
 
 // Get closest message from the same user
 const getClosestMessage = (messages, msgIndex) => {
@@ -93,22 +104,16 @@ const getClosestMessage = (messages, msgIndex) => {
             message: messages[prevMessage.index].message + ". " + messages[nextMessage.index].message
         }
       } else if (prevMessage.delta < nextMessage.delta) {
-        // console.log("prev message 1");
         return messages[prevMessage.index];
       } else if (prevMessage.delta > nextMessage.delta) {
-        console.log(messages[nextMessage.index]);
-        console.log("nextMessage 1");
         return messages[nextMessage.index];
       }
 
     } else if (prevMessage) {
-        // console.log("prev message 2");
       return messages[prevMessage.index];
     } else if (nextMessage) {
-        // console.log("nextMessage 2");
       return messages[nextMessage.index];
     }
-    console.log("No closest message found")
     return message;
 }
 
