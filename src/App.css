@@ -171,6 +171,10 @@ body {
   opacity: .7;
 }
 
+.cardOption h3 {
+  text-transform: capitalize;
+}
+
 .cardOptionSelected {
   opacity: 1;
   width: 50%;

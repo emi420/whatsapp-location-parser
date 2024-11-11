@@ -7,9 +7,9 @@ import DownloadButton from './components/DownloadButton';
 import NavBar from './components/NavBar';
 import NavModal from './components/NavModal';
 import Settings from "./components/Settings";
-import Help from "./components/Help";
 import useSettings from './hooks/useSettings';
 import useWhatsappParser from './hooks/useWhatsappParser';
+import { FormattedMessage } from 'react-intl';
 
 function App() {
 
@@ -21,15 +21,6 @@ function App() {
     msgPosition: "closest"
   });
   const [geoJson] = useWhatsappParser({ text: content, msgPosition: settings.msgPosition});
-
-  const getPositionLabel = (position) => {
-    if (position === "after") {
-      return "next";
-    } else if (position === "before") {
-      return "previous";
-    }
-    return "closest";
-  }
   
   const handleFile = (fileContent) => {
     setContent(fileContent)
@@ -60,6 +51,25 @@ function App() {
     setModalContent(null);
   }, [settings.msgPosition])
 
+  let configMsgPositionText;
+  if (settings.msgPosition === "before") {
+    configMsgPositionText = <FormattedMessage
+      id = "app.config.closestPreviousMsg"
+      defaultMessage="previous"
+    />
+  } else if (settings.msgPosition === "after") {
+    configMsgPositionText = <FormattedMessage
+      id = "app.config.closestNextMsg"
+      defaultMessage="next"
+    />
+  } else {
+    configMsgPositionText = <FormattedMessage
+      id = "app.config.closestMsg"
+      defaultMessage="closest"
+    />
+  }
+
+
   return (
     <div className="app">
       <header className="header">
@@ -67,8 +77,6 @@ function App() {
           <NavBar onOptionClick={(option) => {
             if (option === "options") {
                 setModalContent(<Settings settings={settings} onChange={handleSettingsChange} />)
-            } else if (option === "help") {
-                setModalContent(<Help />)
             }
           }} />
           <NavModal isOpen={modalContent !== null} onClose={handleModalClose} content={modalContent} />
@@ -77,12 +85,20 @@ function App() {
         { data && data.features.length > 0 ?
         <div className="fileOtions">
             <DownloadButton data={data} filename="whatsapp-locations" />
-            <button onClick={handleNewUploadClick} className="secondaryButton">Upload new file</button>
+            <button onClick={handleNewUploadClick} className="secondaryButton">
+              <FormattedMessage
+                id = "app.uploadNewFile"
+                defaultMessage="Upload new file"
+              /> 
+            </button>
         </div>
         :
         <>
           <p>
-            Export a chat from the app and visualize the locations shared in the conversation
+            <FormattedMessage
+              id = "app.subtitle"
+              defaultMessage="Export a chat from the app and visualize the locations shared in the conversation"
+            />
           </p>
           <div className="copy">
             <span>Free and Open Source Software by</span>
@@ -96,7 +112,15 @@ function App() {
           <div className="fileUpload">
             <FileUpload onDataFileLoad={handleDataFile} onFileLoad={handleFile} />
           </div>
-          <p>It will search for locations and the <strong>{getPositionLabel(settings.msgPosition)}</strong> message from the same user.</p>
+          <p>
+            <FormattedMessage
+              id = "app.config.msgPositionTextStart"
+              defaultMessage="It will search for locations and the"
+            /> <strong>{ configMsgPositionText }</strong> <FormattedMessage
+              id = "app.config.msgPositionTextEnd"
+              defaultMessage="message from the same user."
+            />
+          </p>
           <a className="githubLink" href="https://github.com/hotosm/whatsapp-location-parser">https://github.com/hotosm/whatsapp-location-parser</a>
         </>
       }
@@ -110,7 +134,12 @@ function App() {
       { data && data.features.length === 0 && 
         <>
           <h2>No locations found in this file.</h2>
-          <button onClick={handleNewUploadClick} className="secondaryButton">Upload new file</button>
+          <button onClick={handleNewUploadClick} className="secondaryButton">
+          <FormattedMessage
+              id = "app.uploadNewFile"
+              defaultMessage="Upload new file"
+            /> 
+          </button>
         </>
       }
     </div>

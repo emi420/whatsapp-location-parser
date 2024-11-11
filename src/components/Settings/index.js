@@ -1,5 +1,6 @@
 import React from "react";
 import CardOption from "./CardOption";
+import { FormattedMessage } from 'react-intl';
 
 function Settings({ settings, onChange }) {
 
@@ -17,28 +18,68 @@ function Settings({ settings, onChange }) {
           selected={settings.msgPosition === "closest"} 
           img={process.env.PUBLIC_URL + "/img/config-closest.png"} 
           name="closest"
-          title="Closest"
+          title={<FormattedMessage
+            id = "app.config.closestMsg"
+            defaultMessage="closest"
+          />}
           onClick={handleOptionClick}
         >
-          It will look for the closest message from the same user.
+          <FormattedMessage
+              id = "app.config.msgPositionTextStart"
+              defaultMessage="It will search for locations and the"
+            /> <strong> <FormattedMessage
+                id = "app.config.closestMsg"
+                defaultMessage="closest"
+              /></strong> <FormattedMessage
+              id = "app.config.msgPositionTextEnd"
+              defaultMessage="message from the same user."
+            />
         </CardOption>
         <CardOption
           selected={settings.msgPosition === "after"}
           img={process.env.PUBLIC_URL + "/img/config-after.png"}
           name="after"
-          title="After"
+          title={<FormattedMessage
+            id = "app.config.closestNextMsg"
+            defaultMessage="next"
+          />}
           onClick={handleOptionClick}
         >
-          It will look for the closest message from the same user <strong>after</strong> the location.
+          <FormattedMessage
+              id = "app.config.msgPositionTextStart"
+              defaultMessage="It will search for locations and the"
+            /> <strong>
+              <FormattedMessage
+                id = "app.config.closestNextMsg"
+                defaultMessage="next"
+              />
+              </strong> <FormattedMessage
+              id = "app.config.msgPositionTextEnd"
+              defaultMessage="message from the same user."
+            />
         </CardOption>
         <CardOption
           selected={settings.msgPosition === "before"}
           img={process.env.PUBLIC_URL + "/img/config-before.png"}
           name="before"
-          title="Before"
+          title={<FormattedMessage
+            id = "app.config.closestPreviousMsg"
+            defaultMessage="previous"
+          />}
           onClick={handleOptionClick}
         >
-          It will look for the closest message from the same user <strong>before</strong> the location.
+            <FormattedMessage
+              id = "app.config.msgPositionTextStart"
+              defaultMessage="It will search for locations and the"
+            /> <strong>
+              <FormattedMessage
+                id = "app.config.previousNextMsg"
+                defaultMessage="previous"
+              />
+            </strong> <FormattedMessage
+              id = "app.config.msgPositionTextEnd"
+              defaultMessage="message from the same user."
+            />
         </CardOption>
       </div>
     </div>

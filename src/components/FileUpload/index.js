@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from "react";
 import { FileUploader } from "react-drag-drop-files";
 import JSZip from "jszip";
+import { useIntl } from 'react-intl';
 
 const fileTypes = ["txt", "zip"];
 
 function FileUpload({ onFileLoad, onDataFileLoad, onError}) {
   const [file, setFile] = useState(null);
+  const intl = useIntl();
 
   const handleChange = (file) => {
     // Read a .txt export
@@ -46,7 +48,13 @@ function FileUpload({ onFileLoad, onDataFileLoad, onError}) {
   }, [file, onError, onFileLoad]);
 
   return (
-    <FileUploader classes={"fileUploadDropArea"} handleChange={handleChange} name="file" types={fileTypes} />
+    <FileUploader
+      classes={"fileUploadDropArea"}
+      handleChange={handleChange}
+      name="file"
+      types={fileTypes}
+      label={intl.formatMessage({id: "app.uploadLabel", defaultMessage: "Upload or drag a file right here"})}
+    />
   );
 }
 

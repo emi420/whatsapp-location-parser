@@ -1,4 +1,5 @@
 import React from "react";
+import { FormattedMessage } from 'react-intl';
 
 function DownloadButton({ data, filename }) {
 
@@ -7,7 +8,12 @@ function DownloadButton({ data, filename }) {
   )
 
   return (
-    <a className="primaryButton" href={createDownloadLink(data)} download={`${filename}.geojson`}>Download</a>
+    <a className="primaryButton" href={createDownloadLink(data)} download={`${filename}.geojson`}>
+      <FormattedMessage
+        id = "app.download"
+        defaultMessage="Download"
+      />
+    </a>
   );
 }
 
