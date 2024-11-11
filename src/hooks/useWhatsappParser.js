@@ -68,12 +68,11 @@ const parseDateStringiOS = (dateStr) => {
 
 // Parse date strings in the format DD/MM/YY hh:mm a. m./p. m.
 const parseDateStringAndroid = (dateStr) => {
-    const dateTime = dateStr.replace("a. m.", "AM").replace("p. m.","PM").split(" ");
+    let dateTime = dateStr.replace("a. m.", "AM").replace("p. m.", "PM").split(" ");
     const date = dateTime[0].split("/");
     const fmtDate = [[date[1], date[0], date[2]].join("/"), dateTime[1]].join(" ")
     return new Date(fmtDate);
 }
-
 
 // Get closest message from the same user
 const getClosestMessage = (messages, msgIndex) => {
@@ -84,8 +83,13 @@ const getClosestMessage = (messages, msgIndex) => {
     let message = messages[msgIndex];
 
     while (
+
+      // There's a prev or next message
+      // and the next message is different from the prev one
       (messages[prevIndex] || messages[nextIndex]) && 
       !(nextMessage && prevMessage) ) {
+
+      // If prev message is from the same user
       if (messages[prevIndex] &&
           messages[prevIndex].username === message.username &&
          !prevMessage) {
@@ -95,7 +99,8 @@ const getClosestMessage = (messages, msgIndex) => {
             delta: delta_prev
         }
       }
-    
+
+      // If next message is from the same user
       if (messages[nextIndex] && 
           messages[nextIndex].username === message.username &&
           !nextMessage) {
@@ -109,6 +114,10 @@ const getClosestMessage = (messages, msgIndex) => {
       prevIndex--;
       nextIndex++;
     }
+
+    // If there are prev and next messages
+    // check the time difference between the two
+    // to decide which to return
 
     if (prevMessage && nextMessage) {
 
