@@ -15,12 +15,12 @@ function App() {
 
   const [content, setContent] = useState(null);
   const [data, setData] = useState(null);
+  const [dataFiles, setDataFiles] = useState({});
   const [modalContent, setModalContent] = useState(null);
   const [settings, handleSettingsChange] = useSettings({
     msgPosition: "closest"
   });
   const [geoJson] = useWhatsappParser({ text: content, msgPosition: settings.msgPosition});
-  const dataFiles = useRef({});
 
   const getPositionLabel = (position) => {
     if (position === "after") {
@@ -34,9 +34,11 @@ function App() {
   const handleFile = (fileContent) => {
     setContent(fileContent)
   }
-
   const handleDataFile = (filename, fileContent) => {
-    dataFiles.current[filename] = fileContent;
+    setDataFiles(prevData => ({
+      ...prevData,
+      [filename]: fileContent
+    }));
   }
 
   useEffect(() => {
@@ -101,7 +103,7 @@ function App() {
       { data && data.features.length > 0 && 
         <div className="data">
           <div className="map">
-            <Map data={data} dataFiles={dataFiles.current}/>
+            <Map data={data} dataFiles={dataFiles}/>
           </div>
         </div>
       }
