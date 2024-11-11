@@ -1,12 +1,12 @@
 import React, { useState, useEffect, useRef } from 'react';
 import logo from './hot-logo.svg';
 import './App.css';
-import FileUpload from './components/FileUpload'
-import Map from './components/Map'
+import FileUpload from './components/FileUpload/index.jsx'
+import Map from './components/Map/index.jsx'
 import DownloadButton from './components/DownloadButton';
 import NavBar from './components/NavBar';
 import NavModal from './components/NavModal';
-import Settings from "./components/Settings";
+import Settings from "./components/Settings/index.jsx";
 import useSettings from './hooks/useSettings';
 import useWhatsappParser from './hooks/useWhatsappParser';
 import { FormattedMessage } from 'react-intl';
@@ -116,7 +116,7 @@ function App() {
             <FormattedMessage
               id = "app.config.msgPositionTextStart"
               defaultMessage="It will search for locations and the"
-            /> <strong>{ configMsgPositionText }</strong> <FormattedMessage
+            />&nbsp;<strong>{ configMsgPositionText }</strong> <FormattedMessage
               id = "app.config.msgPositionTextEnd"
               defaultMessage="message from the same user."
             />

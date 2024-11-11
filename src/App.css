@@ -48,14 +48,14 @@ body {
 }
 
 .header h1 {
-  font-family: BarlowCondensed;
+  font-family: Archivo;
   font-style: normal;
   font-weight: 200;
   margin-bottom: 0;
 }
 
 .header h1 > strong {
-  font-weight: 400;
+  font-weight: 700;
   font-style: bold;
 }
 
@@ -209,19 +209,9 @@ body {
 }
 
 @font-face {
-  font-family: BarlowCondensed;
-  font-style: bold;
-  font-weight: 400;
-  src: url("/public/fonts/BarlowCondensed-Bold.ttf");
+  font-family: Archivo;
+  src: url("/public/fonts/Archivo-VariableFont.ttf");
 }
-
-@font-face {
-  font-family: BarlowCondensed;
-  font-style: normal;
-  font-weight: 200;
-  src: url("/public/fonts/BarlowCondensed-Regular.ttf");
-}
-
 
 .map {
   width: 100vw;

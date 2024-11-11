@@ -16,7 +16,7 @@ function Settings({ settings, onChange }) {
       <div className="cardOptions">
         <CardOption 
           selected={settings.msgPosition === "closest"} 
-          img={process.env.PUBLIC_URL + "/img/config-closest.png"} 
+          img={"/img/config-closest.png"} 
           name="closest"
           title={<FormattedMessage
             id = "app.config.closestMsg"
@@ -30,14 +30,15 @@ function Settings({ settings, onChange }) {
             /> <strong> <FormattedMessage
                 id = "app.config.closestMsg"
                 defaultMessage="closest"
-              /></strong> <FormattedMessage
+              /> </strong> <FormattedMessage
               id = "app.config.msgPositionTextEnd"
               defaultMessage="message from the same user."
             />
         </CardOption>
+
         <CardOption
           selected={settings.msgPosition === "after"}
-          img={process.env.PUBLIC_URL + "/img/config-after.png"}
+          img={"/img/config-after.png"}
           name="after"
           title={<FormattedMessage
             id = "app.config.closestNextMsg"
@@ -58,9 +59,10 @@ function Settings({ settings, onChange }) {
               defaultMessage="message from the same user."
             />
         </CardOption>
+
         <CardOption
           selected={settings.msgPosition === "before"}
-          img={process.env.PUBLIC_URL + "/img/config-before.png"}
+          img={"/img/config-before.png"}
           name="before"
           title={<FormattedMessage
             id = "app.config.closestPreviousMsg"
@@ -74,7 +76,7 @@ function Settings({ settings, onChange }) {
             /> <strong>
               <FormattedMessage
                 id = "app.config.previousNextMsg"
-                defaultMessage="previous"
+                defaultMessage="next"
               />
             </strong> <FormattedMessage
               id = "app.config.msgPositionTextEnd"
