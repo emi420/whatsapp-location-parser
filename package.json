@@ -14,6 +14,7 @@
     "react-drag-drop-files": "^2.3.10",
     "react-modal": "^3.16.1",
     "react-scripts": "5.0.1",
+    "turf-extent": "^1.0.4",
     "web-vitals": "^2.1.4"
   },
   "scripts": {

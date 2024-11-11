@@ -182,7 +182,7 @@ const parseAndIndex = (lines, system) => {
     lines.forEach((line) => {
 
         // Clean unicode from line
-        line = line.replace(/[\u200E\u200F\u202A-\u202E\u200B]/g, '');
+        line = line.replaceAll(/[\u200E\u200F\u202A-\u202E\u200B]/g, '');
 
         const msg = parseMessage(line, system);
         if (msg) {

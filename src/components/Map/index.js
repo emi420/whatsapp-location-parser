@@ -3,6 +3,7 @@ import maplibregl from 'maplibre-gl';
 import 'maplibre-gl/dist/maplibre-gl.css';
 import { osm } from './source';
 import Popup from './popup';
+import extent from 'turf-extent';
 import './map.css';
 
 export default function Map({ data, dataFiles }) {
@@ -44,6 +45,12 @@ export default function Map({ data, dataFiles }) {
           type: "geojson"
         });
         
+
+        const bbox = extent(data);
+        map.current.fitBounds(bbox, {
+            padding: 50
+        });
+
         // Change cursor on marker hover
         map.current.on('mouseenter', 'pois', () => {
           map.current.getCanvas().style.cursor = 'pointer';
