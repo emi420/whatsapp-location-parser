@@ -1,4 +1,4 @@
-# WhatsApp Location Parser
+# ChatMap
 
 Export a chat from the app and visualize the locations shared in the conversation.
 
