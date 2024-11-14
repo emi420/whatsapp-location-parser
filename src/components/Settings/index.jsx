@@ -16,7 +16,7 @@ function Settings({ settings, onChange }) {
       <div className="cardOptions">
         <CardOption 
           selected={settings.msgPosition === "closest"} 
-          img={"/img/config-closest.png"} 
+          img={"img/config-closest.png"} 
           name="closest"
           title={<FormattedMessage
             id = "app.config.closestMsg"
@@ -38,7 +38,7 @@ function Settings({ settings, onChange }) {
 
         <CardOption
           selected={settings.msgPosition === "after"}
-          img={"/img/config-after.png"}
+          img={"img/config-after.png"}
           name="after"
           title={<FormattedMessage
             id = "app.config.closestNextMsg"
@@ -62,7 +62,7 @@ function Settings({ settings, onChange }) {
 
         <CardOption
           selected={settings.msgPosition === "before"}
-          img={"/img/config-before.png"}
+          img={"img/config-before.png"}
           name="before"
           title={<FormattedMessage
             id = "app.config.closestPreviousMsg"

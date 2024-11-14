@@ -12,8 +12,9 @@ const locales = {
 }
 
 const getLocaleMessages = () => {
-  if (navigator.language in locales) {
-    return locales[navigator.language];
+  const lang = navigator.language.slice(0,2);
+  if (lang in locales) {
+    return locales[lang];
   }
   return locales["en"]
 }
