@@ -6,7 +6,7 @@ Fue desarrollado para ayudar a los servicios de emergencia y organizaciones huma
 localizaciones de personas en campo durante desastres y emergencias, pero puede usarse para
 cualquier otra cosa.
 
-[Pruéalo aquí!](https://hotosm.github.io/chatmap/)
+[Pruébalo aquí!](https://hotosm.github.io/chatmap/)
 
 ## Cómo se usa?
 
