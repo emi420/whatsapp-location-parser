@@ -17,4 +17,4 @@ be used for anything else.
 
 ## More docs
 
-* [Spanish](https://github.com/hotosm/wchatmap/blob/master/docs/README.es.md)
+* [Spanish](https://github.com/hotosm/chatmap/blob/master/docs/README.es.md)
