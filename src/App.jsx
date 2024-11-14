@@ -81,7 +81,7 @@ function App() {
           }} />
           <NavModal isOpen={modalContent !== null} onClose={handleModalClose} content={modalContent} />
         </div>
-        <h1 className={data && data.features.length > 0 ? "titleSmall" : ""} >WhatsApp <strong>Location Parser</strong></h1>
+        <h1 className={data && data.features.length > 0 ? "titleSmall" : ""} >WhatsApp <strong>ChatMap</strong></h1>
         { data && data.features.length > 0 ?
         <div className="fileOtions">
             <DownloadButton data={data} filename="whatsapp-locations" />
@@ -121,7 +121,7 @@ function App() {
               defaultMessage="message from the same user."
             />
           </p>
-          <a className="githubLink" href="https://github.com/hotosm/whatsapp-location-parser">https://github.com/hotosm/whatsapp-location-parser</a>
+          <a className="githubLink" href="https://github.com/hotosm/chatmap">https://github.com/hotosm/chatmap</a>
         </>
       }
       { data && data.features.length > 0 && 

@@ -50,8 +50,10 @@ body {
 .header h1 {
   font-family: Archivo;
   font-style: normal;
+  font-size: 4rem;
   font-weight: 200;
   margin-bottom: 0;
+  letter-spacing: -.2rem;
 }
 
 .header h1 > strong {
@@ -62,6 +64,7 @@ body {
 
 .header h1.titleSmall {
   font-size: 2rem;
+  letter-spacing: -.1rem;
 }
 
 .content {

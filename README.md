@@ -1,24 +1,25 @@
-# WhatsApp Location Parser
+# ChatMap
 
-This very simple web app can read locations shared on a WhatsApp chat 
-exported to .txt or .zip and parse them as GeoJSON for displaying them
-on a map and also download as a file.
+Export a chat from the app and visualize the locations shared in the conversation.
 
 It was developed to help emergency services and humanitarian organizations to get
-locations from people in the field during disasters and emergencies.
+locations from people in the field during disasters and emergencies, but it can
+be used for anything else.
 
-[Try it here!](https://hotosm.github.io/whatsapp-location-parser/)
-
-<img width="925" alt="Screenshot 2024-06-13 at 17 29 29" src="https://github.com/emi420/whatsapp-location-parser/assets/1226194/6e89875b-a8c1-43ee-ad34-5e5d4ecfe6bd">
+[Try it here!](https://hotosm.github.io/chatmap/)
 
 ## How to use it?
 
-Check [docs](https://github.com/hotosm/whatsapp-location-parser/tree/master/docs)
+Check [docs](https://github.com/hotosm/chatmap/tree/master/docs)
 
 ## Install and run
 
-`npm install`
-`npm start`
+```bash
+npm install
+npm start
+```
+
+## Licensing
 
 Copyright 2024 Emilio Mariscal
 
