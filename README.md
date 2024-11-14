@@ -8,7 +8,7 @@ be used for anything else.
 
 [Try it here!](https://hotosm.github.io/chatmap/)
 
-<img width="1114" alt="Screenshot 2024-11-14 at 09 06 37" src="https://github.com/user-attachments/assets/8f49c66d-4b98-4bc5-8028-1c897ef34880">
+<img width="1043" alt="Screenshot 2024-11-14 at 09 30 14" src="https://github.com/user-attachments/assets/497ccb06-949b-41e9-bdd4-d4b25c915fda">
 
 ## How to use it?
 
