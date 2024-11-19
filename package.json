@@ -2,7 +2,7 @@
   "name": "chatmap",
   "version": "0.2.0",
   "private": true,
-  "homepage": "https://hotosm.github.io/chatmap",
+  "homepage": "https://chatmap.hotosm.org",
   "author": "Emilio Mariscal <emilio.mariscal@hotosm.org>",
   "dependencies": {
     "@testing-library/jest-dom": "^5.17.0",

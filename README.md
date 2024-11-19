@@ -6,7 +6,7 @@ It was developed to help emergency services and humanitarian organizations to ge
 locations from people in the field during disasters and emergencies, but it can
 be used for anything else.
 
-[Try it here!](https://hotosm.github.io/chatmap/)
+[Try it here!](https://chatmap.hotosm.org)
 
 <img width="1043" alt="Screenshot 2024-11-14 at 09 30 14" src="https://github.com/user-attachments/assets/497ccb06-949b-41e9-bdd4-d4b25c915fda">
 
