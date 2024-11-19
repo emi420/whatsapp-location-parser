@@ -6,7 +6,7 @@ It was developed to help emergency services and humanitarian organizations to ge
 locations from people in the field during disasters and emergencies, but it can
 be used for anything else.
 
-[Try it here!](https://chatmap.hotosm.org)
+Try it here! [chatmap.hotosm.org](https://chatmap.hotosm.org)
 
 ## How to use it?
 
