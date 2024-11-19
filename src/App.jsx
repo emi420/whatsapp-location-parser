@@ -121,7 +121,9 @@ function App() {
               defaultMessage="message from the same user."
             />
           </p>
-          <a className="githubLink" href="https://github.com/hotosm/chatmap">https://github.com/hotosm/chatmap</a>
+          <div className="infoLinks">
+            <a href="https://www.hotosm.org/privacy">We collect zero data. https://www.hotosm.org/privacy</a>
+          </div>
         </>
       }
       { data && data.features.length > 0 && 

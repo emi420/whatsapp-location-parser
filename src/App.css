@@ -200,15 +200,20 @@ body {
   padding-left: 10px;
 }
 
-.githubLink {
-  color: #999;
+.infoLinks {
   display: block;
   position: absolute;
   right: 0;
+  width: 100%;
+  text-align: center;
   bottom: 0;
   padding: 2vh;
-  text-decoration: none;
   font-size: .8rem;
+}
+
+.infoLinks a {
+  color: #999;
+  text-decoration: none;
 }
 
 @font-face {
