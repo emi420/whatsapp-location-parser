@@ -5,10 +5,12 @@ import App from './App';
 import { IntlProvider } from 'react-intl';
 import En from './int/en.json';
 import Es from './int/es.json';
+import Pt from './int/pt.json';
 
 const locales = {
   "en": En,
-  "es": Es
+  "es": Es,
+  "pt": Pt
 }
 
 const getLocaleMessages = () => {

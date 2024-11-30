@@ -48,7 +48,6 @@ body {
 }
 
 .header h1 {
-  font-family: Archivo;
   font-style: normal;
   font-size: 4rem;
   font-weight: 200;
@@ -214,11 +213,6 @@ body {
 .infoLinks a {
   color: #999;
   text-decoration: none;
-}
-
-@font-face {
-  font-family: Archivo;
-  src: url("/public/fonts/Archivo-VariableFont.ttf");
 }
 
 .map {
