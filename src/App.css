@@ -1,9 +1,6 @@
-body {
-  overflow: hidden;
-}
-
 .app {
   text-align: center;
+  font-family: Archivo, Helvetica, Arial, sans-serif;
 }
 
 .copy .logo {
