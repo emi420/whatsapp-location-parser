@@ -51,6 +51,8 @@ function App() {
     />
   }
 
+  const dataAvailable = content && geoJson && geoJson.features.length > 0;
+  const noLocations = content && geoJson && geoJson.features.length === 0;
 
   return (
     <div className="app">
@@ -63,8 +65,8 @@ function App() {
           }} />
           <NavModal isOpen={modalContent !== null} onClose={handleModalClose} content={modalContent} />
         </div>
-        <h1 className={content && geoJson && geoJson.features.length > 0 ? "titleSmall" : ""} >WhatsApp <strong>ChatMap</strong></h1>
-        { geoJson && geoJson.features.length > 0 ?
+        <h1 className={dataAvailable ? "titleSmall" : ""} >WhatsApp <strong>ChatMap</strong></h1>
+        { dataAvailable ?
         <div className="fileOtions">
             <DownloadButton data={geoJson} filename="whatsapp-locations" />
             <button onClick={handleNewUploadClick} className="secondaryButton">
@@ -108,14 +110,14 @@ function App() {
           </div>
         </>
       }
-      { content && geoJson && geoJson.features.length > 0 && 
+      { dataAvailable && 
         <div className="data">
           <div className="map">
             <Map data={geoJson} dataFiles={dataFiles}/>
           </div>
         </div>
       }
-      { content && geoJson && geoJson.features.length === 0 && 
+      { noLocations && 
         <>
           <h2>
             <FormattedMessage
