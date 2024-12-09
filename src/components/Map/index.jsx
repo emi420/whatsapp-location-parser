@@ -6,6 +6,19 @@ import Popup from './popup';
 import extent from 'turf-extent';
 import './map.css';
 
+const getMessage = (properties, dataFiles) => {
+  if (properties.file && properties.file in dataFiles) {
+    if (properties.file.endsWith("jpg")) {
+      return <img className="popupImage" alt="Message attached file" src={URL.createObjectURL(dataFiles[properties.file])} />
+    } else if (properties.file.endsWith("mp4")) {
+      return <video controls className="popupImage" alt="Message attached file" src={URL.createObjectURL(dataFiles[properties.file])} />
+    } else if (properties.file.endsWith("opus")) {
+      return <audio controls><source src={URL.createObjectURL(dataFiles[properties.file])} type="audio/opus"></source></audio>
+    }
+  }
+  return properties.message;
+}
+
 export default function Map({ data, dataFiles }) {
     const mapContainer = useRef(null);
     const map = useRef(null);
@@ -16,7 +29,7 @@ export default function Map({ data, dataFiles }) {
       if (datetime) {
         const d = new Date(datetime);
         return (d.getDate() + "/" + 
-          d.getMonth() + "/" + 
+          (d.getMonth() + 1) + "/" + 
           d.getFullYear() + " " + 
           String(d.getHours()).padStart(2, '0') + ":" + 
           String(d.getMinutes()).padStart(2, '0'))
@@ -103,10 +116,7 @@ export default function Map({ data, dataFiles }) {
                 <span className="msgDatetime">{formatDate(activePopupFeature.properties.datetime)}</span>
               </p>
               <p>
-              { (activePopupFeature.properties.file && activePopupFeature.properties.file in dataFiles) ?
-                <img className="popupImage" alt="Message attached file" src={URL.createObjectURL(dataFiles[activePopupFeature.properties.file])} />
-                : activePopupFeature.properties.message
-              }
+                { getMessage(activePopupFeature.properties, dataFiles) }
               </p>
             </div>
           </Popup>

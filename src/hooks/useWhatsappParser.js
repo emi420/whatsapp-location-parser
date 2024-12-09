@@ -21,6 +21,24 @@ const detectSystem = (line) => {
     return "UNKNOWN";
 }
 
+// Look for jpg or mp4 media files
+const lookForMediaFile = (msgObject) => {
+    const msg = msgObject.message.toLowerCase();
+    let mediaFileIndex = msg.indexOf(".jpg");
+    if (mediaFileIndex < 0) {
+        mediaFileIndex = msg.indexOf(".mp4");
+    }
+    if (mediaFileIndex > 0) {
+        return msgObject.message.substring(0,mediaFileIndex + 4);
+    }
+    if (mediaFileIndex < 0) {
+        mediaFileIndex = msg.indexOf(".opus");
+    }
+    if (mediaFileIndex > 0) {
+        return msgObject.message.substring(0,mediaFileIndex + 5);
+     } 
+}
+
 // Search for a location
 const searchLocation = (line) => {
     const match = line.match(LOCATION_PATTERN);
@@ -48,12 +66,9 @@ const parseMessage = (line, system) => {
             message: match[3],
         }
 
-        // Look for JPG images
-        const jpgIndex = msgObject.message.toLowerCase().indexOf(".jpg");
-        if (jpgIndex > 0) {
-            msgObject.file = msgObject.message.substring(0,jpgIndex + 4);
-        }
-
+        // Look for media
+        msgObject.file = lookForMediaFile(msgObject);
+        
         return msgObject;
     }
 }
@@ -206,7 +221,6 @@ function useWhatsappParser({ text, msgPosition}) {
             features: []
         };
         let featureObject = {}
-        let last_line_is_location = false;
 
         // Creates an indexed dictionary for messages
         let system;
@@ -223,52 +237,34 @@ function useWhatsappParser({ text, msgPosition}) {
             if (msgObject.message) {
                 const location = searchLocation(msgObject.message);
                 if (location) {
-                    if (!last_line_is_location) {
-                        featureObject = {
-                            type: "Feature",
-                            properties: {},
-                            geometry: {
-                                type: "Point",
-                                coordinates: [
-                                    parseFloat(location[1]),
-                                    parseFloat(location[0])
-                                ]
-                            }
+                    featureObject = {
+                        type: "Feature",
+                        properties: {},
+                        geometry: {
+                            type: "Point",
+                            coordinates: [
+                                parseFloat(location[1]),
+                                parseFloat(location[0])
+                            ]
                         }
-                        last_line_is_location = true;
                     }
-                }
-
-                const isLastMessage = (location && index === msgObjects.length - 1);
-                if ((!location && last_line_is_location) || isLastMessage) {
-                    const searchIndex = isLastMessage ? index : index - 1
+                    let message;
                     switch (msgPosition) {
                         case "before":
-                            featureObject.properties = {
-                                ...getClosestPrevMessage(messages, searchIndex)
-                            };
+                            message = getClosestPrevMessage(messages, index);
                             break;
                         case "after":
-                            featureObject.properties = {
-                                ...getClosestNextMessage(messages, searchIndex)
-                            };
+                            message = getClosestNextMessage(messages, index);
                             break;
                         default:
-                            featureObject.properties = {
-                                ...getClosestMessage(messages, searchIndex)
-                            };
-                            break;
-                        }
-                        geoJSON.features.push(featureObject);
-                    featureObject = {};
-                    last_line_is_location = false;
+                            message = getClosestMessage(messages, index);
+                        break;
+                    }
+                    featureObject.properties = {...message};
+                    geoJSON.features.push(featureObject);
                 }
             }
         });
-
-        if (last_line_is_location) {
-            geoJSON.features.push(featureObject);
-        }
         setGeoJSON(geoJSON);
     }, [text, msgPosition]);
 

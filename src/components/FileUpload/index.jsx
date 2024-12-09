@@ -22,7 +22,9 @@ function FileUpload({ onFileLoad, onDataFileLoad, onError}) {
             zip.files[filename].async("string").then(function (data) {
               onFileLoad(data);
             });
-          } else if (filename.toLowerCase().endsWith(".jpg")) {
+          } else if (filename.toLowerCase().endsWith(".jpg") ||
+              filename.toLowerCase().endsWith(".mp4") ||
+              filename.toLowerCase().endsWith(".opus")) {
             zip.files[filename].async("arraybuffer").then(function (data) {
               const buffer = new Uint8Array(data);
               const blob = new Blob([buffer.buffer]);
