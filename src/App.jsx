@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import logo from './hot-logo.svg';
 import './App.css';
 import FileUpload from './components/FileUpload/index.jsx'
