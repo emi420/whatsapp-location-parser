@@ -63,7 +63,7 @@ function App() {
           }} />
           <NavModal isOpen={modalContent !== null} onClose={handleModalClose} content={modalContent} />
         </div>
-        <h1 className={geoJson && geoJson.features.length > 0 ? "titleSmall" : ""} >WhatsApp <strong>ChatMap</strong></h1>
+        <h1 className={content && geoJson && geoJson.features.length > 0 ? "titleSmall" : ""} >WhatsApp <strong>ChatMap</strong></h1>
         { geoJson && geoJson.features.length > 0 ?
         <div className="fileOtions">
             <DownloadButton data={geoJson} filename="whatsapp-locations" />
@@ -117,7 +117,12 @@ function App() {
       }
       { content && geoJson && geoJson.features.length === 0 && 
         <>
-          <h2>No locations found in this file.</h2>
+          <h2>
+            <FormattedMessage
+              id = "app.nolocations"
+              defaultMessage="No locations found in this file"
+            />
+          </h2>
           <button onClick={handleNewUploadClick} className="secondaryButton">
           <FormattedMessage
               id = "app.uploadNewFile"

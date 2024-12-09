@@ -8,7 +8,9 @@
     "app.uploadNewFile": "Subir un nuevo archivo",
     "app.download": "Descargar",
     "app.options": "Opciones",
-    "app.uploadLabel": "Sube o arrastra un archivo aquí mismo"
+    "app.uploadLabel": "Sube o arrastra un archivo aquí mismo",
+    "app.nolocations": "No se han encontrado ubicaciones en este archivo"
+
 
 }
   

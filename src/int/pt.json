@@ -8,5 +8,6 @@
     "app.uploadNewFile": "Carregar um novo ficheiro",
     "app.download": "Descarregar",
     "app.options": "Opções",
-    "app.uploadLabel": "Carregue ou arraste um ficheiro aqui mesmo"
+    "app.uploadLabel": "Carregue ou arraste um ficheiro aqui mesmo",
+    "app.nolocations": "Não foram encontrados locais neste arquivo."
 }
