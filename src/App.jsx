@@ -8,38 +8,21 @@ import NavBar from './components/NavBar';
 import NavModal from './components/NavModal';
 import Settings from "./components/Settings/index.jsx";
 import useSettings from './hooks/useSettings';
+import useFileManager from './hooks/useFileManager';
 import useWhatsappParser from './hooks/useWhatsappParser';
 import { FormattedMessage } from 'react-intl';
 
 function App() {
 
-  const [content, setContent] = useState(null);
-  const [data, setData] = useState(null);
-  const [dataFiles, setDataFiles] = useState({});
   const [modalContent, setModalContent] = useState(null);
   const [settings, handleSettingsChange] = useSettings({
     msgPosition: "closest"
   });
+  const [handleFile, handleDataFile, resetFileManager, dataFiles, content] = useFileManager();
   const [geoJson] = useWhatsappParser({ text: content, msgPosition: settings.msgPosition});
   
-  const handleFile = (fileContent) => {
-    setContent(fileContent)
-  }
-  const handleDataFile = (filename, fileContent) => {
-    setDataFiles(prevData => ({
-      ...prevData,
-      [filename]: fileContent
-    }));
-  }
-
-  useEffect(() => {
-    if (!geoJson) return;
-    setData(geoJson);
-  }, [geoJson]);
-  
   const handleNewUploadClick = () => {
-    setContent(null);
-    setData(null);
+    resetFileManager()
   }
 
   const handleModalClose = () => {
@@ -47,7 +30,6 @@ function App() {
   }
 
   useEffect(() => {
-    setData(null);
     setModalContent(null);
   }, [settings.msgPosition])
 
@@ -81,10 +63,10 @@ function App() {
           }} />
           <NavModal isOpen={modalContent !== null} onClose={handleModalClose} content={modalContent} />
         </div>
-        <h1 className={data && data.features.length > 0 ? "titleSmall" : ""} >WhatsApp <strong>ChatMap</strong></h1>
-        { data && data.features.length > 0 ?
+        <h1 className={geoJson && geoJson.features.length > 0 ? "titleSmall" : ""} >WhatsApp <strong>ChatMap</strong></h1>
+        { geoJson && geoJson.features.length > 0 ?
         <div className="fileOtions">
-            <DownloadButton data={data} filename="whatsapp-locations" />
+            <DownloadButton data={geoJson} filename="whatsapp-locations" />
             <button onClick={handleNewUploadClick} className="secondaryButton">
               <FormattedMessage
                 id = "app.uploadNewFile"
@@ -122,18 +104,18 @@ function App() {
             />
           </p>
           <div className="infoLinks">
-            <a href="https://www.hotosm.org/privacy">We collect zero data. https://www.hotosm.org/privacy</a>
+            <a href="https://www.geoJsonhotosm.org/privacy">We collect zero data. https://www.hotosm.org/privacy</a>
           </div>
         </>
       }
-      { data && data.features.length > 0 && 
+      { content && geoJson && geoJson.features.length > 0 && 
         <div className="data">
           <div className="map">
-            <Map data={data} dataFiles={dataFiles}/>
+            <Map data={geoJson} dataFiles={dataFiles}/>
           </div>
         </div>
       }
-      { data && data.features.length === 0 && 
+      { content && geoJson && geoJson.features.length === 0 && 
         <>
           <h2>No locations found in this file.</h2>
           <button onClick={handleNewUploadClick} className="secondaryButton">
