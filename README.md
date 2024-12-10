@@ -17,8 +17,8 @@ Check [docs](https://github.com/hotosm/chatmap/tree/master/docs)
 ## Install and run
 
 ```bash
-npm install
-npm start
+yarn install
+yarn start
 ```
 
 ## Licensing
