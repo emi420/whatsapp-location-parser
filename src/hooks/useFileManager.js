@@ -2,25 +2,22 @@ import { useState } from 'react';
 
 function useFileManager() {
 
-    const [dataFiles, setDataFiles] = useState({});
-    const [content, setContent] = useState(null);
+    const [dataFiles, setDataFiles] = useState();
+    const [files, setFiles] = useState();
 
-    const handleFile = (fileContent) => {
-        setContent(fileContent)
+    const handleFiles = (files) => {
+        setFiles(files)
     }
     const handleDataFile = (filename, fileContent) => {
-        setDataFiles(prevData => ({
-            ...prevData,
-            [filename]: fileContent
-        }));
+        setDataFiles(prevState => ({...prevState, ...{[filename]: fileContent}}));
     }
 
     const resetFileManager = () => {
-        setContent(null);
-        setDataFiles({});
+        setFiles(null);
+        setDataFiles();
     }
 
-    return [handleFile, handleDataFile, resetFileManager, dataFiles, content];
+    return [handleFiles, handleDataFile, resetFileManager, dataFiles, files];
 
 }
 

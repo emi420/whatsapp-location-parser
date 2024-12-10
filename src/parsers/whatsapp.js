@@ -1,5 +1,3 @@
-import { useState, useEffect } from 'react';
-
 // Regex to search for coordinates in the format <lat>,<lon> (ex: -31.006037,-64.262794)
 const LOCATION_PATTERN = /[-+]?([1-8]?\d(\.\d+)?|90(\.0+)?),\s*[-+]?(180(\.0+)?|((1[0-7]\d)|([1-9]?\d))(\.\d+)?)$/;
 
@@ -31,12 +29,6 @@ const lookForMediaFile = (msgObject) => {
     if (mediaFileIndex > 0) {
         return msgObject.message.substring(0,mediaFileIndex + 4);
     }
-    if (mediaFileIndex < 0) {
-        mediaFileIndex = msg.indexOf(".opus");
-    }
-    if (mediaFileIndex > 0) {
-        return msgObject.message.substring(0,mediaFileIndex + 5);
-     } 
 }
 
 // Search for a location
@@ -208,68 +200,59 @@ const parseAndIndex = (lines, system) => {
     return result;
 }
 
-// Hook for parsing messages from a text
-function useWhatsappParser({ text, msgPosition}) {
 
-    const [geoJSON, setGeoJSON] = useState(null);
+export default function whatsAppParser({ text, msgPosition }) {
+    if (!text) return;
+    const lines = text.split("\n");
+    const geoJSON = {
+        type: "FeatureCollection",
+        features: []
+    };
+    let featureObject = {}
 
-    useEffect(() => {
-        if (!text) return;
-        const lines = text.split("\n");
-        const geoJSON = {
-            type: "FeatureCollection",
-            features: []
-        };
-        let featureObject = {}
+    // Creates an indexed dictionary for messages
+    let system;
+    for (let i = 0; i < lines.length; i++) {
+        system = detectSystem(lines[i]);
+        if (system !== "UNKNOWN") {
+            break;
+        }
+    };
+    const messages = parseAndIndex(lines, system);
+    const msgObjects = Object.values(messages);
 
-        // Creates an indexed dictionary for messages
-        let system;
-        for (let i = 0; i < lines.length; i++) {
-            system = detectSystem(lines[i]);
-            if (system !== "UNKNOWN") {
-                break;
-            }
-        };
-        const messages = parseAndIndex(lines, system);
-        const msgObjects = Object.values(messages);
-
-        msgObjects.forEach((msgObject, index) => {
-            if (msgObject.message) {
-                const location = searchLocation(msgObject.message);
-                if (location) {
-                    featureObject = {
-                        type: "Feature",
-                        properties: {},
-                        geometry: {
-                            type: "Point",
-                            coordinates: [
-                                parseFloat(location[1]),
-                                parseFloat(location[0])
-                            ]
-                        }
+    msgObjects.forEach((msgObject, index) => {
+        if (msgObject.message) {
+            const location = searchLocation(msgObject.message);
+            if (location) {
+                featureObject = {
+                    type: "Feature",
+                    properties: {},
+                    geometry: {
+                        type: "Point",
+                        coordinates: [
+                            parseFloat(location[1]),
+                            parseFloat(location[0])
+                        ]
                     }
-                    let message;
-                    switch (msgPosition) {
-                        case "before":
-                            message = getClosestPrevMessage(messages, index);
-                            break;
-                        case "after":
-                            message = getClosestNextMessage(messages, index);
-                            break;
-                        default:
-                            message = getClosestMessage(messages, index);
-                        break;
-                    }
-                    featureObject.properties = {...message};
-                    geoJSON.features.push(featureObject);
                 }
+                let message;
+                switch (msgPosition) {
+                    case "before":
+                        message = getClosestPrevMessage(messages, index);
+                        break;
+                    case "after":
+                        message = getClosestNextMessage(messages, index);
+                        break;
+                    default:
+                        message = getClosestMessage(messages, index);
+                    break;
+                }
+                featureObject.properties = {...message};
+                geoJSON.features.push(featureObject);
             }
-        });
-        setGeoJSON(geoJSON);
-    }, [text, msgPosition]);
+        }
+    });
 
-    return [geoJSON];
-
+    return geoJSON;
 }
-
-export default useWhatsappParser;

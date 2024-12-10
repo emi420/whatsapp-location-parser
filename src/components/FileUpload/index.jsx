@@ -5,54 +5,64 @@ import { useIntl } from 'react-intl';
 
 const fileTypes = ["txt", "zip"];
 
-function FileUpload({ onFileLoad, onDataFileLoad, onError}) {
-  const [file, setFile] = useState(null);
+function FileUpload({ onFilesLoad, onDataFileLoad, onError}) {
+  const [files, setFiles] = useState();
+  const [dataFiles, setDataFiles] = useState();
+  const [filesCount, setFilesCount] = useState();
   const intl = useIntl();
 
-  const handleChange = (file) => {
-    // Read a .txt export
-    if (file.name.toLowerCase().endsWith(".txt")) {
-      setFile(file);
-    } else {
-      // File is a Zip
-      new JSZip().loadAsync( file )
-      .then(function(zip) {
-        Object.keys(zip.files).forEach(filename => {
-          if (filename.toLowerCase().endsWith(".txt")) {
-            zip.files[filename].async("string").then(function (data) {
-              onFileLoad(data);
-            });
-          } else if (filename.toLowerCase().endsWith(".jpg") ||
-              filename.toLowerCase().endsWith(".mp4") ||
-              filename.toLowerCase().endsWith(".opus")) {
-            zip.files[filename].async("arraybuffer").then(function (data) {
-              const buffer = new Uint8Array(data);
-              const blob = new Blob([buffer.buffer]);
-              onDataFileLoad(filename, blob);
-            });
-          }
-        })
-      });
-    }
+  const handleChange = (loadedFiles) => {
+    setFilesCount(loadedFiles.length);
+    for (let i = 0; i < loadedFiles.length; i++) {
+      const file = loadedFiles[i];
+      // Read a .txt export
+      if (file.name.toLowerCase().endsWith(".txt")) {
+        var reader = new FileReader();
+        reader.readAsText(file, "UTF-8");
+        reader.onload = function (evt) {
+          setFiles(prevFiles => (
+            {...prevFiles, ...{[file.name]: evt.target.result}}
+          ));  
+        }
+        reader.onerror = function (evt) {
+          onError(file.name);
+        }
+      } else {
+        // File is a Zip
+        new JSZip().loadAsync( file )
+        .then(function(zip) {
+          Object.keys(zip.files).forEach(filename => {
+            if (filename.toLowerCase().endsWith(".txt")) {
+              zip.files[filename].async("string").then(function (data) {
+                setFiles(prevFiles => (
+                  {...prevFiles, ...{[file.name]: data}}
+                ));  
+              });
+            } else if (filename.toLowerCase().endsWith(".jpg") ||
+                filename.toLowerCase().endsWith(".mp4")) {
+              zip.files[filename].async("arraybuffer").then(function (data) {
+                const buffer = new Uint8Array(data);
+                const blob = new Blob([buffer.buffer]);
+                onDataFileLoad(filename, blob)
+              });
+            }
+          })
+        });
+      }
+    };
   };
 
   useEffect(() => {
-    if (file) {
-      var reader = new FileReader();
-      reader.readAsText(file, "UTF-8");
-      reader.onload = function (evt) {
-        onFileLoad(evt.target.result)
-      }
-      reader.onerror = function (evt) {
-        onError();
-      }
+    if (files && Object.keys(files).length === filesCount) {
+      onFilesLoad(files);
     }
-  }, [file, onError, onFileLoad]);
+  }, [files, onFilesLoad]);
 
   return (
     <FileUploader
       classes={"fileUploadDropArea"}
       handleChange={handleChange}
+      multiple
       name="file"
       types={fileTypes}
       label={intl.formatMessage({id: "app.uploadLabel", defaultMessage: "Upload or drag a file right here"})}

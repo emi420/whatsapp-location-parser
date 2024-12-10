@@ -9,8 +9,9 @@ import NavModal from './components/NavModal';
 import Settings from "./components/Settings/index.jsx";
 import useSettings from './hooks/useSettings';
 import useFileManager from './hooks/useFileManager';
-import useWhatsappParser from './hooks/useWhatsappParser';
+import useContentMerger from './hooks/useContentMerger';
 import { FormattedMessage } from 'react-intl';
+import whatsAppParser from './parsers/whatsapp';
 
 function App() {
 
@@ -18,11 +19,16 @@ function App() {
   const [settings, handleSettingsChange] = useSettings({
     msgPosition: "closest"
   });
-  const [handleFile, handleDataFile, resetFileManager, dataFiles, content] = useFileManager();
-  const [geoJson] = useWhatsappParser({ text: content, msgPosition: settings.msgPosition});
+  const [handleFiles, handleDataFile, resetFileManager, dataFiles, files] = useFileManager();
+  const [mapData, resetMerger] = useContentMerger({
+    files: files,
+    msgPosition: settings.msgPosition, 
+    parser: whatsAppParser
+  });
   
   const handleNewUploadClick = () => {
     resetFileManager()
+    resetMerger();
   }
 
   const handleModalClose = () => {
@@ -51,8 +57,8 @@ function App() {
     />
   }
 
-  const dataAvailable = content && geoJson && geoJson.features.length > 0;
-  const noLocations = content && geoJson && geoJson.features.length === 0;
+  const dataAvailable = files && mapData && mapData.features.length > 0;
+  const noLocations = files && mapData && mapData.features.length === 0;
 
   return (
     <div className="app">
@@ -68,7 +74,7 @@ function App() {
         <h1 className={dataAvailable ? "titleSmall" : ""} >WhatsApp <strong>ChatMap</strong></h1>
         { dataAvailable ?
         <div className="fileOtions">
-            <DownloadButton data={geoJson} filename="whatsapp-locations" />
+            <DownloadButton data={mapData} filename="whatsapp-locations" />
             <button onClick={handleNewUploadClick} className="secondaryButton">
               <FormattedMessage
                 id = "app.uploadNewFile"
@@ -91,10 +97,10 @@ function App() {
         </>
       }
       </header>
-      { !content &&
+      { !files &&
         <>
           <div className="fileUpload">
-            <FileUpload onDataFileLoad={handleDataFile} onFileLoad={handleFile} />
+            <FileUpload onDataFileLoad={handleDataFile} onFilesLoad={handleFiles} />
           </div>
           <p>
             <FormattedMessage
@@ -113,7 +119,7 @@ function App() {
       { dataAvailable && 
         <div className="data">
           <div className="map">
-            <Map data={geoJson} dataFiles={dataFiles}/>
+            <Map data={mapData} dataFiles={dataFiles}/>
           </div>
         </div>
       }
