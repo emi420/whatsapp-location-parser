@@ -19,13 +19,13 @@ function usefilesMerger({ files, msgPosition, parser}) {
             type: "FeatureCollection",
             features: [...prevState.features, ...features]
         }));
-    
+
       }, [files]);
 
     const resetMerger = () => {
         setGeoJSON({
             type: "FeatureCollection",
-            features: []    
+            features: []
         })
     }
 

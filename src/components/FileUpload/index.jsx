@@ -22,7 +22,7 @@ function FileUpload({ onFilesLoad, onDataFileLoad, onError}) {
         reader.onload = function (evt) {
           setFiles(prevFiles => (
             {...prevFiles, ...{[file.name]: evt.target.result}}
-          ));  
+          ));
         }
         reader.onerror = function (evt) {
           onError(file.name);
@@ -36,7 +36,7 @@ function FileUpload({ onFilesLoad, onDataFileLoad, onError}) {
               zip.files[filename].async("string").then(function (data) {
                 setFiles(prevFiles => (
                   {...prevFiles, ...{[file.name]: data}}
-                ));  
+                ));
               });
             } else if (filename.toLowerCase().endsWith(".jpg") ||
                 filename.toLowerCase().endsWith(".mp4")) {
