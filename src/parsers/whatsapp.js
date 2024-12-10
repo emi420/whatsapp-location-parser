@@ -41,7 +41,7 @@ const searchLocation = (line) => {
 }
 
 // Parse datetime, username and message
-const parseMessage = (line, system) => {
+const parseMessage = (line, system, lang) => {
     const match = line.match(MSG_PATTERN[system]);
     if (match) {
         let username = match[2];
@@ -53,7 +53,9 @@ const parseMessage = (line, system) => {
         }
 
         let msgObject = {
-            datetime: system === "ANDROID" ? parseDateStringAndroid(match[1]) : parseDateStringiOS(match[1]),
+            datetime: system === "ANDROID" ?
+                parseDateStringAndroid(match[1], lang) :
+                parseDateStringiOS(match[1], lang),
             username:  username,
             message: match[3],
         }
@@ -66,18 +68,28 @@ const parseMessage = (line, system) => {
 }
 
 // Parse date strings in the format [DD/MM/YYYY, hh:mm:ss AM/PM]
-const parseDateStringiOS = (dateStr) => {
+const parseDateStringiOS = (dateStr, lang) => {
     const dateTime = dateStr.split(",");
     const date = dateTime[0].split("/");
-    const fmtDate = [[date[2], date[1], date[0]].join("/"), dateTime[1]].join(" ")
+    let fmtDate;
+    if (lang == "EN") {
+        fmtDate = [[date[2], date[1], date[0]].join("/"), dateTime[1]].join(" ")
+    } else {
+        fmtDate = [[date[1], date[2], date[0]].join("/"), dateTime[1]].join(" ")
+    }
     return new Date(fmtDate);
 }
 
 // Parse date strings in the format DD/MM/YY hh:mm a. m./p. m.
-const parseDateStringAndroid = (dateStr) => {
+const parseDateStringAndroid = (dateStr, lang) => {
     let dateTime = dateStr.replace("a. m.", "AM").replace("p. m.", "PM").split(" ");
     const date = dateTime[0].split("/");
-    const fmtDate = [[date[1], date[0], date[2]].join("/"), dateTime[1]].join(" ")
+    let fmtDate;
+    if (lang == "EN") {
+        fmtDate = [[date[1], date[0], date[2]].join("/"), dateTime[1]].join(" ")
+    } else {
+        fmtDate = [[date[0], date[1], date[2]].join("/"), dateTime[1]].join(" ")
+    }
     return new Date(fmtDate);
 }
 
@@ -183,7 +195,7 @@ const getClosestMessageByDirection = (messages, msgIndex, direction) => {
 }
 
 // Parse messages from lines and create an index
-const parseAndIndex = (lines, system) => {
+const parseAndIndex = (lines, system, lang) => {
     let index = 0;
     const result = {};
     lines.forEach((line) => {
@@ -191,7 +203,7 @@ const parseAndIndex = (lines, system) => {
         // Clean unicode from line
         line = line.replaceAll(/[\u200E\u200F\u202A-\u202E\u200B]/g, '');
 
-        const msg = parseMessage(line, system);
+        const msg = parseMessage(line, system, lang);
         if (msg) {
             result[index] = msg;
             index++;
@@ -218,7 +230,11 @@ export default function whatsAppParser({ text, msgPosition }) {
             break;
         }
     };
-    const messages = parseAndIndex(lines, system);
+    let lang = "EN";
+    if (text.indexOf("grupo") > -1) {
+        lang = "ES";
+    }
+    const messages = parseAndIndex(lines, system, lang);
     const msgObjects = Object.values(messages);
 
     msgObjects.forEach((msgObject, index) => {
