@@ -40,7 +40,7 @@ const searchLocation = (line) => {
     return null;
 }
 
-// Parse datetime, username and message
+// Parse time, username and message
 const parseMessage = (line, system, lang) => {
     const match = line.match(MSG_PATTERN[system]);
     if (match) {
@@ -60,32 +60,11 @@ const parseMessage = (line, system, lang) => {
             message: match[3],
         }
 
-        try {
-            msgObject.datetime = system === "ANDROID" ?
-            parseDateTimeStringAndroid(match[1], lang) :
-            parseDateTimeStringiOS(match[1], lang)
-        } catch(e) {
-            consolel.log("Error parsing datetime")
-        }
-
         // Look for media
         msgObject.file = lookForMediaFile(msgObject);
         
         return msgObject;
     }
-}
-
-// Parse date strings in the format [DD/MM/YYYY, hh:mm:ss AM/PM]
-const parseDateTimeStringiOS = (dateStr, lang) => {
-    const dateTime = dateStr.split(",");
-    const date = dateTime[0].split("/");
-    let fmtDate;
-    if (lang == "EN") {
-        fmtDate = [[date[2], date[1], date[0]].join("/"), dateTime[1]].join(" ")
-    } else {
-        fmtDate = [[date[1], date[2], date[0]].join("/"), dateTime[1]].join(" ")
-    }
-    return new Date(fmtDate);
 }
 
 // Parse time strings in the format [hh:mm:ss AM/PM]
@@ -97,21 +76,8 @@ const parseTimeStringiOS = (dateStr, lang) => {
     return new Date(fmtDate);
 }
 
-// Parse date strings in the format DD/MM/YY hh:mm a. m./p. m.
-const parseDateTimeStringAndroid = (dateStr, lang) => {
-    let dateTime = dateStr.replace("a. m.", "AM").replace("p. m.", "PM").split(" ");
-    const date = dateTime[0].split("/");
-    let fmtDate;
-    if (lang == "EN") {
-        fmtDate = [[date[1], date[0], date[2]].join("/"), dateTime[1]].join(" ")
-    } else {
-        fmtDate = [[date[0], date[1], date[2]].join("/"), dateTime[1]].join(" ")
-    }
-    return new Date(fmtDate);
-}
 
-
-// Parse date strings in the format hh:mm a. m./p. m.
+// Parse time strings in the format hh:mm a. m./p. m.
 const parseTimeStringAndroid = (dateStr, lang) => {
     let dateTime = dateStr.replace("a. m.", "AM").replace("p. m.", "PM").split(" ");
     const date = dateTime[0].split("/");

@@ -24,19 +24,10 @@ export default function Map({ data, dataFiles }) {
     const popupRef = useRef(null);
 
     const formatDate = (properties) => {
-      if (properties.datetime) {
-        const d = new Date(properties.datetime);
-        return (d.getDate() + "/" + 
-          (d.getMonth() + 1) + "/" + 
-          d.getFullYear() + " " + 
-          String(d.getHours()).padStart(2, '0') + ":" + 
-          String(d.getMinutes()).padStart(2, '0'))
-      } else {
         const d = new Date(properties.time);
         return (
           String(d.getHours()).padStart(2, '0') + ":" + 
           String(d.getMinutes()).padStart(2, '0'))
-      }
     };
       
     useEffect(() => {
