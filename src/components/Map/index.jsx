@@ -25,7 +25,7 @@ export default function Map({ data, dataFiles }) {
 
     const formatDate = (properties) => {
       if (properties.datetime) {
-        const d = new Date(datetime);
+        const d = new Date(properties.datetime);
         return (d.getDate() + "/" + 
           (d.getMonth() + 1) + "/" + 
           d.getFullYear() + " " + 
