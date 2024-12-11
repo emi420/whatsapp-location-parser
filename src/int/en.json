@@ -9,6 +9,7 @@
     "app.download": "Download",
     "app.options": "Options",
     "app.uploadLabel": "Upload or drag a file right here",
-    "app.nolocations": "No locations found in this file"
+    "app.nolocations": "No locations found in this file",
+    "app.loading": "Loading"
 }
   

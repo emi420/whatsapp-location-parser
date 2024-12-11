@@ -9,5 +9,6 @@
     "app.download": "Descarregar",
     "app.options": "Opções",
     "app.uploadLabel": "Carregue ou arraste um ficheiro aqui mesmo",
-    "app.nolocations": "Não foram encontrados locais neste arquivo."
+    "app.nolocations": "Não foram encontrados locais neste arquivo.",
+    "app.loading": "Carregando"
 }

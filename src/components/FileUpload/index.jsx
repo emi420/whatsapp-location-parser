@@ -7,7 +7,6 @@ const fileTypes = ["txt", "zip"];
 
 function FileUpload({ onFilesLoad, onDataFileLoad, onError}) {
   const [files, setFiles] = useState();
-  const [dataFiles, setDataFiles] = useState();
   const [filesCount, setFilesCount] = useState();
   const intl = useIntl();
 
@@ -58,7 +57,14 @@ function FileUpload({ onFilesLoad, onDataFileLoad, onError}) {
     }
   }, [files, onFilesLoad]);
 
+  const loading = files && Object.keys(files).length !== filesCount;
+
   return (
+    <>
+    { loading ? <p style={{"textAlign": "center"}}>
+      {intl.formatMessage({id: "app.loading", defaultMessage: "Loading"})} ...
+    </p> : ""}
+    <div style={loading ? {display: "none"} : null}>
     <FileUploader
       classes={"fileUploadDropArea"}
       handleChange={handleChange}
@@ -67,6 +73,9 @@ function FileUpload({ onFilesLoad, onDataFileLoad, onError}) {
       types={fileTypes}
       label={intl.formatMessage({id: "app.uploadLabel", defaultMessage: "Upload or drag a file right here"})}
     />
+    </div>
+
+    </>
   );
 }
 
