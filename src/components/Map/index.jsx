@@ -23,16 +23,20 @@ export default function Map({ data, dataFiles }) {
     const [activePopupFeature, setActivePopupFeature] = useState(null);
     const popupRef = useRef(null);
 
-    const formatDate = (datetime) => {
-      if (datetime) {
+    const formatDate = (properties) => {
+      if (properties.datetime) {
         const d = new Date(datetime);
         return (d.getDate() + "/" + 
           (d.getMonth() + 1) + "/" + 
           d.getFullYear() + " " + 
           String(d.getHours()).padStart(2, '0') + ":" + 
           String(d.getMinutes()).padStart(2, '0'))
+      } else {
+        const d = new Date(properties.time);
+        return (
+          String(d.getHours()).padStart(2, '0') + ":" + 
+          String(d.getMinutes()).padStart(2, '0'))
       }
-      return "unknown";
     };
       
     useEffect(() => {
@@ -111,7 +115,7 @@ export default function Map({ data, dataFiles }) {
            <div className="activePopupFeatureContent">
               <p>
                 <span className="msgUsername">{activePopupFeature.properties.username}</span>
-                <span className="msgDatetime">{formatDate(activePopupFeature.properties.datetime)}</span>
+                <span className="msgDatetime">{formatDate(activePopupFeature.properties)}</span>
               </p>
               <p>
                 { getMessage(activePopupFeature.properties, dataFiles) }

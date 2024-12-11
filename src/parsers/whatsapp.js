@@ -53,11 +53,19 @@ const parseMessage = (line, system, lang) => {
         }
 
         let msgObject = {
-            datetime: system === "ANDROID" ?
-                parseDateStringAndroid(match[1], lang) :
-                parseDateStringiOS(match[1], lang),
+            time: system === "ANDROID" ?
+                parseTimeStringAndroid(match[1]) :
+                parseTimeStringiOS(match[1]),
             username:  username,
             message: match[3],
+        }
+
+        try {
+            msgObject.datetime = system === "ANDROID" ?
+            parseDateTimeStringAndroid(match[1], lang) :
+            parseDateTimeStringiOS(match[1], lang)
+        } catch(e) {
+            consolel.log("Error parsing datetime")
         }
 
         // Look for media
@@ -68,7 +76,7 @@ const parseMessage = (line, system, lang) => {
 }
 
 // Parse date strings in the format [DD/MM/YYYY, hh:mm:ss AM/PM]
-const parseDateStringiOS = (dateStr, lang) => {
+const parseDateTimeStringiOS = (dateStr, lang) => {
     const dateTime = dateStr.split(",");
     const date = dateTime[0].split("/");
     let fmtDate;
@@ -80,8 +88,17 @@ const parseDateStringiOS = (dateStr, lang) => {
     return new Date(fmtDate);
 }
 
+// Parse time strings in the format [hh:mm:ss AM/PM]
+const parseTimeStringiOS = (dateStr, lang) => {
+    const dateTime = dateStr.split(",");
+    let fmtDate;
+    const now = new Date();
+    fmtDate = [[now.getFullYear(), now.getMonth(), now.getDay()].join("/"), dateTime[1]].join(" ")
+    return new Date(fmtDate);
+}
+
 // Parse date strings in the format DD/MM/YY hh:mm a. m./p. m.
-const parseDateStringAndroid = (dateStr, lang) => {
+const parseDateTimeStringAndroid = (dateStr, lang) => {
     let dateTime = dateStr.replace("a. m.", "AM").replace("p. m.", "PM").split(" ");
     const date = dateTime[0].split("/");
     let fmtDate;
@@ -90,6 +107,17 @@ const parseDateStringAndroid = (dateStr, lang) => {
     } else {
         fmtDate = [[date[0], date[1], date[2]].join("/"), dateTime[1]].join(" ")
     }
+    return new Date(fmtDate);
+}
+
+
+// Parse date strings in the format hh:mm a. m./p. m.
+const parseTimeStringAndroid = (dateStr, lang) => {
+    let dateTime = dateStr.replace("a. m.", "AM").replace("p. m.", "PM").split(" ");
+    const date = dateTime[0].split("/");
+    let fmtDate;
+    const now = new Date();
+    fmtDate = [[now.getFullYear(), now.getMonth(), now.getDay()].join("/"), dateTime[1]].join(" ")
     return new Date(fmtDate);
 }
 
@@ -112,7 +140,7 @@ const getClosestMessage = (messages, msgIndex) => {
       if (messages[prevIndex] &&
           messages[prevIndex].username === message.username &&
          !prevMessage) {
-        const delta_prev = Math.abs(messages[msgIndex].datetime - messages[prevIndex].datetime);
+        const delta_prev = Math.abs(messages[msgIndex].time - messages[prevIndex].time);
         prevMessage = {
             index: prevIndex, 
             delta: delta_prev
@@ -123,7 +151,7 @@ const getClosestMessage = (messages, msgIndex) => {
       if (messages[nextIndex] && 
           messages[nextIndex].username === message.username &&
           !nextMessage) {
-        const delta_next = Math.abs(messages[msgIndex].datetime - messages[nextIndex].datetime);
+        const delta_next = Math.abs(messages[msgIndex].time - messages[nextIndex].time);
         nextMessage = {
             index: nextIndex, 
             delta: delta_next
@@ -180,7 +208,7 @@ const getClosestMessageByDirection = (messages, msgIndex, direction) => {
       if (messages[nextIndex] && 
           messages[nextIndex].username === message.username &&
           !nextMessage) {
-        const delta_next = Math.abs(messages[msgIndex].datetime - messages[nextIndex].datetime);
+        const delta_next = Math.abs(messages[msgIndex].time - messages[nextIndex].time);
         nextMessage = {
             index: nextIndex, 
             delta: delta_next
