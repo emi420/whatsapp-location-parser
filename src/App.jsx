@@ -112,7 +112,7 @@ function App() {
             />
           </p>
           <div className="infoLinks">
-            <a href="https://www.geoJsonhotosm.org/privacy">We collect zero data. https://www.hotosm.org/privacy</a>
+            <a href="https://www.hotosm.org/privacy">We collect zero data. https://www.hotosm.org/privacy</a>
           </div>
         </>
       }
