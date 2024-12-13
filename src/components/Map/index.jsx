@@ -11,7 +11,7 @@ const getMessage = (properties, dataFiles) => {
     if (properties.file.endsWith("jpg")) {
       return <img className="popupImage" alt="Message attached file" src={URL.createObjectURL(dataFiles[properties.file])} />
     } else if (properties.file.endsWith("mp4")) {
-      return <video controls className="popupImage" alt="Message attached file" src={URL.createObjectURL(dataFiles[properties.file])} />
+      return <video controls autoplay loop className="popupImage" alt="Message attached file" src={URL.createObjectURL(dataFiles[properties.file])} />
     }
   }
   return properties.message;
