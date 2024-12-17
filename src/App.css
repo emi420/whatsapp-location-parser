@@ -11,6 +11,18 @@
   pointer-events: none;
 }
 
+.github {
+  background-image: url("img/github.png");
+  background-repeat: no-repeat;
+  width: 25px;
+  height: 25px;
+  display: inline-block;
+  padding-left: 12px;
+  background-size: contain;
+  vertical-align: middle;
+  margin-left: 3px;
+}
+
 .copy {
   font-size: .9rem;
   padding: 1vh;
@@ -57,10 +69,13 @@
   font-style: bold;
 }
 
-
 .header h1.titleSmall {
   font-size: 2rem;
   letter-spacing: -.1rem;
+}
+
+.subtitle {
+  padding: 0 15px 0 15px;
 }
 
 .content {

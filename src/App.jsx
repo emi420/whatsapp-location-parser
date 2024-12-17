@@ -84,16 +84,12 @@ function App() {
         </div>
         :
         <>
-          <p>
+          <p className="subtitle">
             <FormattedMessage
               id = "app.subtitle"
               defaultMessage="Export a chat from the app and visualize the locations shared in the conversation"
             />
           </p>
-          <div className="copy">
-            <span>Free and Open Source Software by</span>
-            <img src={logo} className="logo" alt="logo" />
-          </div>
         </>
       }
       </header>
@@ -112,6 +108,11 @@ function App() {
             />
           </p>
           <div className="infoLinks">
+            <div className="copy">
+            <a className="github" href="https://github.com/hotosm/chatmap"></a>
+              <span>Free and Open Source Software by</span>
+              <a href="https://hotosm.org"><img src={logo} className="logo" alt="logo" /></a>
+            </div>
             <a href="https://www.hotosm.org/privacy">We collect zero data. https://www.hotosm.org/privacy</a>
           </div>
         </>
