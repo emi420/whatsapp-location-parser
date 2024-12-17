@@ -98,7 +98,7 @@ function App() {
           <div className="fileUpload">
             <FileUpload onDataFileLoad={handleDataFile} onFilesLoad={handleFiles} />
           </div>
-          <p>
+          <p className="configDesc">
             <FormattedMessage
               id = "app.config.msgPositionTextStart"
               defaultMessage="It will search for locations and the"

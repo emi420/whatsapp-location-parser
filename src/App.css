@@ -1,6 +1,7 @@
 .app {
   text-align: center;
   font-family: Archivo, Helvetica, Arial, sans-serif;
+  background-color: white;
 }
 
 .copy .logo {
@@ -90,11 +91,15 @@
   text-align: center;
   justify-content: center;
   display: flex;
-  min-height: 35vh;
+  min-height: 15vh;
 }
 
 .fileUpload {
   padding: 5vh;
+}
+
+.configDesc {
+  padding: 0 5px 0;
 }
 
 .fileUploadDropArea {
@@ -220,6 +225,7 @@
   bottom: 0;
   padding: 2vh;
   font-size: .8rem;
+  background-color: white;
 }
 
 .infoLinks a {
