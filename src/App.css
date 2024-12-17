@@ -12,7 +12,7 @@
 }
 
 .github {
-  background-image: url("img/github.png");
+  background-image: url("/img/github.png");
   background-repeat: no-repeat;
   width: 25px;
   height: 25px;
